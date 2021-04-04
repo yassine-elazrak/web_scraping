@@ -1,30 +1,63 @@
-// import logo from '../style/logo.svg';
-// import './App.css';
-// import React from 'react';
+import React, { useState } from 'react';
+import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
+import './todoList.css';
+
+const Apps = () => {
+	
+	
+	const [item, setItem] = useState("");
+	const [newItem, setNewItem] = useState([]);
+	
+	const firstEvent = (event) => {
+		setItem(event.target.value);
+	}
+	
+	const secondEvent = () => {
+		
+
+		setNewItem((prev)=>{
+			return [...prev, item]
+		});
+		
+		setItem("");
+		
+	}
+	
+	const thirdEvent = () => {
+		setNewItem([]);
+	}
+	
+	return(
+		<div>
+			<br />
+			<br />
+			<div className="childOne">
+				<input type="text" value={item} placeholder="Add a task" onChange={firstEvent} />
+				<Button className="AddBtn" onClick={secondEvent}>
+					<AddIcon />
+				</Button>
+				<br />
+				<br />
+				<ul className="textFont">
+					{
+						newItem.map((val) => {
+							return <li> {val} </li>;
+						})
+					}
+				</ul>
+			</div>
+			<br />
+			<br />
+			<div className="childTwo">
+				<Button className="delBtn" onClick={thirdEvent}>
+					<DeleteIcon />Delete All
+				</Button>
+			</div>
+		</div>
+	);
+}
 
 
-// function App() {
-//     return (<
-//         div className="App" >
-//         <
-//         header className="App-header" >
-//             <
-//                 img src={logo}
-//                 className="App-logo"
-//                 alt="logo" />
-//             <
-//         p >
-//                 Edit < code > src / App.js < /code> and save to reload. <
-//         /p> <
-//         a className="App-link"
-//                         href="https://reactjs.org"
-//                         target="_blank"
-//                         rel="noopener noreferrer" >
-//                         Learn React <
-//         /a> <
-//         /header> <
-//         /div>
-//     );
-// }
-
-// export default App;
+export default Apps;

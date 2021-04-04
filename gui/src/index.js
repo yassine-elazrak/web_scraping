@@ -4,10 +4,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 // import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Header from './header'
+import Header from './headerls'
+import Barsearch from './BarSearch'
 
 ReactDOM.render( <React.StrictMode >
     <Header/>
+    <Barsearch/>
+    {/* <App/> */}
     </React.StrictMode>,
     document.getElementById('root')
 );

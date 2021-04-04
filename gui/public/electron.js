@@ -23,7 +23,7 @@ function createWindow() {
         icon: ""
     });
      
-    // mainWindow.loadURL("http://localhost:5000")
+    mainWindow.webContents.openDevTools()//
     mainWindow.loadURL(
         isDev
         ? "http://localhost:3000"
