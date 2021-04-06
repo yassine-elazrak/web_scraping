@@ -1,5 +1,5 @@
 import React from 'react';
-import {Line, Bar} from 'react-chartjs-2';
+import {Bar} from 'react-chartjs-2';
 
 const state = {
   labels: ['January', 'February', 'March',
