@@ -1,33 +1,56 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Navbar} from 'react-bootstrap';
-
+import {makeStyles} from '@material-ui/core/styles';
+import {HashRouter , Link } from 'react-router-dom';
+// import Brightness6Icon from '@material-ui/icons/Brightness6';
+// import Button from '@material-ui/core/Button'
+// import {Link} from 'react-router-dom';
 
 function Header() {
-    return ( 
-    <>
-    <Navbar bg="dark">
-    <Navbar.Brand href="#home">
-    hello
-      {/* <img
-        src="/logo.svg"
-        width="30"
-        height="30"
-        className="d-inline-block align-top"
-        alt="React Bootstrap logo"
-      /> */}
-    </Navbar.Brand>
-    <Navbar.Brand href="#home">
-    hello
-    </Navbar.Brand>
 
-  </Navbar>
-  
-
-    </>
-    )
+  const classes = useStyles()
+    return (
+      <div className={classes.root}>
+          <HashRouter>
+          <nav>
+            <ul className={classes.list}>
+              <li className={classes.li}>
+              <Link to="/visualition">visualition</Link>
+              </li>
+              <li className={classes.li}>
+                <Link to="/">home</Link>
+              </li>
+            </ul>
+          </nav>
+          </HashRouter>
+      </div>
+      )
 }
 
+const useStyles = makeStyles({
+  root:{
+    // position:'fixed',
+    // width:"100%",
+    backgroundColor: 'darkcyan',
+    display: 'flex',
+    justifyContent:'flex-end',
+    flexGrow: 1,
+    minHeight:'20px',
+    // marginBottom:'git 30px',
+
+  },
+  list:{ 
+    listStyle: 'none',
+    display: 'flex',
+    flexDirection: 'row',
+
+
+  },
+  li:{
+    padding: '2px 22px',
+    textDecoration:'none',
+  }
+
+});
 
 
 export default Header;

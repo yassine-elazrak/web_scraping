@@ -4,13 +4,22 @@ import ReactDOM from 'react-dom';
 import './index.css';
 // import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Header from './headerls'
+import Header from './header'
 import Barsearch from './BarSearch'
+import {HashRouter,  Route} from 'react-router-dom';
+// import Chart from './chart';
+import Visualiton from './visualiton';
 
 ReactDOM.render( <React.StrictMode >
-    <Header/>
-    <Barsearch/>
-    {/* <App/> */}
+    <HashRouter>
+        <Header/>
+        <div>
+            <Route path="/" exact component={Barsearch} />
+            <Route path="/visualition"  component={Visualiton} />
+        </div>
+    </HashRouter>
+    {/* <Chart/> */}
+    {/* <Visualiton/> */}
     </React.StrictMode>,
     document.getElementById('root')
 );
