@@ -1,90 +1,59 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
-import {useForm} from 'react-hooks-helper';
-import { Button } from '@material-ui/core';
-import Icon from '@material-ui/core/Icon';
-import SaveIcon from '@material-ui/icons/Save';
-import {useFrom} from 'react-hook-form';
+import Checkbox from '@material-ui/core/Checkbox';
 
+const Clean = ({formData, setFormData}) => {
+    const classes = useStyles();
+    const {settings} = formData;
+    const [state, setState] = useState(settings);
 
-
-
-export const Input = () => {
-    return (
-        <div>
-            inputtt
-        </div>
-    )
-}
-
-
-
-const Clean = () => {
+    const handleChange = (event) =>{
+        setState({...state, [event.target.name]: event.target.checked});
+    }
+    const steps = ['digit', 'punctuation', 'ulrs', 'lowercase', 'diacritics',
+    'whitespace', 'fillna' , 'stemming', 'Name'];
     
-    const  classes = useStyles();
+    const addChange = (data)=>{
+        console.log('Add',data);
 
+        setFormData((prevFormData)=> ({...prevFormData, settings:data})
+        )};
+
+    useEffect(()=>{
+        addChange(state);
+    },[state])
+    
     return (
-        <div className={classes.container}>
-            <div className={classes.item}>
-                item0
-                <Input/>
-            </div>
-            <div className={classes.item}>
-                item1
-
-            </div>
-            <div className={classes.item2}>
-                item2
-
-            </div>
-            <div className={ classes.item3}>
-                item3
-
-            </div>
-            <div >
-            <Button
-                variant="contained"
-                color="primary"
-                size="large"
-                className={classes.button}
-                startIcon={<SaveIcon />}
-                                        >
-                 Save
-            </Button>
-            </div>
-           
+        <div className={classes.root}>
+            {
+                steps.map((data) =>{
+                    return <div className={classes.item}> <Checkbox checked={state[[data]]} name={data} onChange={handleChange}/> <p>remove {data}</p></div>
+                })
+            }
             
         </div>
     )
 }
 const useStyles = makeStyles({
-    container: {
-        display: 'grid',
-        gridTemplateColumns: 'repeat(2,1fr)',
-        gridAutoRows:'minmax(240px,auto)',
-        padding: '11px',
-        gap:'20px',
 
+    root:{
+        display:'grid',
+        gridTemplateColumns: 'repeat(3,1fr)',
+        gridAutoRows:'minmax(22px,auto)',
+        gap: '1rem',
+        backgroundColor:'#9963',
+        width: '600px',
+        padding:'11px',
+        borderRadius:'12px',
 
     },
     item:{
-        backgroundColor:'#4343',
-        borderRadius :'12px',
+        backgroundColor:'white',
+        display:'flex',
+        flexDirection:'row',
+        justifyContent:'center',
 
     },
-    item2:{
-        backgroundColor:'#4343',
-        gridRow: '1 / 3',
-        borderRadius :'12px',
-
-
-    },
-    item3:{
-        backgroundColor:'#4343',
-        gridColumn: '1 / 3',
-        borderRadius :'12px',
-        
-    }
-})
+});
 
 export default Clean;
