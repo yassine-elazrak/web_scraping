@@ -1,6 +1,10 @@
 import React from 'react';
 import {Bar} from 'react-chartjs-2';
+import Plotly from "plotly.js-basic-dist";
+import createPlotlyComponent from "react-plotly.js/factory";
+import "./test.css"
 
+const Plot = createPlotlyComponent(Plotly);
 const state = {
   labels: ['January', 'February', 'March',
            'April', 'May'],
@@ -31,19 +35,50 @@ const conf = {
               }]
           }
           }
-const Chart = (props) => {
+export const Chart = (props) => {
   // console.log('hello')
   // const name = Bar
     return (
-      <div>
+      <div className="test">
         
-        <Bar
+        {/* <Bar
           data={state}
           options={conf}
-         
-        />
+          layout={ { width:'45vw', font: {size: 18}, title: 'A Fancy Plot'} }
+        /> */}
+         <Plot 
+        data={[{
+          values: [19, 26, 55],
+          labels: ['Residential', 'Non-Residential', 'Utility'],
+          type: 'pie'
+        }]}
+        layout={ { width:'45 vw', font: {size: 18}, title: 'A Fancy Plot'} }
+        // config={{responsive: true}}
+      />
       </div>
     );
   
 }
-export default Chart;
+
+
+
+
+
+
+export const ChartPlotly = () => {
+  return (
+    <div>
+        <Plot
+        data={[{
+          values: [19, 26, 55],
+          labels: ['Residential', 'Non-Residential', 'Utility'],
+          type: 'pie'
+        }]}
+        layout={ { width:'45vw', font: {size: 18}, title: 'A Fancy Plot'} }
+        // config={{responsive: true}}
+      />
+    </div>
+  )
+}
+
+// showlegend: false, width: 530,

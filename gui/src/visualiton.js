@@ -1,6 +1,6 @@
 import React from 'react'
 import {makeStyles} from '@material-ui/core/styles';
-import Chart from './chart';
+import {Chart, ChartPlotly} from './chart';
 
 export default function Visualiton() {
     const classes = useStyles();
@@ -10,13 +10,13 @@ export default function Visualiton() {
                 <Chart/>
             </div>
             <div className={classes.item}>
-                item2
+               <ChartPlotly/>
             </div>
             <div className={classes.item}>
                 Item3
             </div>
             <div className={classes.item}>
-                item4
+               {/* <ChartPlotly/> */}
             </div>
             
         </div>
@@ -27,8 +27,10 @@ const useStyles = makeStyles({
 
     root: {
         display: 'grid',
+        // width:'100%',
         gridTemplateColumns: 'repeat(2,1fr)',
         gridAutoRows:'minmax(340px,auto)',
+        gridAutoColumns:'minmax(340px,auto)',
         padding: '11px',
         gap:'20px',
         // backgroundColor:"red",

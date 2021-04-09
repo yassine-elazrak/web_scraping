@@ -1,0 +1,6 @@
+.test{
+    width: 100%;
+    background-color:blue;
+    position:relative;
+    overflow: hidden;
+}
