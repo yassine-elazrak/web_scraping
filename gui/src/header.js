@@ -14,6 +14,9 @@ function Header() {
           <nav>
             <ul className={classes.list}>
               <li className={classes.li}>
+                <Link to='/main'>test</Link>
+              </li>
+              <li className={classes.li}>
                   <Link to='/configuration'>Configuration</Link>
               </li>
               <li className={classes.li}>
