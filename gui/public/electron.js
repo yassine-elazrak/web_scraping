@@ -9,14 +9,14 @@ function createWindow() {
     // 'run.exe';
     var child = require('child_process').exec;
   console.log("executablePath==>",executablePath)
-    child(executablePath, function (err, data) {
-      if (err) {
-        console.error(err);
-        return;
-      }
-      console.log(data.toString());
-      console.log("hello yassine awrak")
-    });
+    // child(executablePath, function (err, data) {
+    //   if (err) {
+    //     console.error(err);
+    //     return;
+    //   }
+    //   console.log(data.toString());
+    //   console.log("hello yassine awrak")
+    // });
     mainWindow = new BrowserWindow({ 
         width: 1200, 
         height: 800,

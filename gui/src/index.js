@@ -17,7 +17,7 @@ import Step1 from './step1';
 // import Clean from './clean';
 
 ReactDOM.render( <React.StrictMode >
-    {/* <HashRouter>
+    <HashRouter>
         <Header/>
         <div>
             <Route path="/" exact component={Barsearch} />
@@ -25,8 +25,8 @@ ReactDOM.render( <React.StrictMode >
             <Route path= "/configuration" exact component={Step1}/>
             <Route path="/main" exact component={Main}/>
         </div>
-    </HashRouter> */}
-    <Main/>
+    </HashRouter>
+    {/* <Main/> */}
     {/* <Chart/> */}
     {/* <Visualiton/> */}
     {/* <Clean/> */}
