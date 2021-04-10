@@ -10,7 +10,7 @@ import {HashRouter,  Route} from 'react-router-dom';
 // import Chart from './chart';
 import Visualiton from './visualiton';
 // import {MultFrom} from './multFrom';
-import Main from './main';
+import MyApp from './main';
 import Step1 from './step1';
 
 
@@ -23,7 +23,7 @@ ReactDOM.render( <React.StrictMode >
             <Route path="/" exact component={Barsearch} />
             <Route path="/visualition" exact component={Visualiton} />
             <Route path= "/configuration" exact component={Step1}/>
-            <Route path="/main" exact component={Main}/>
+            <Route path="/main" exact component={MyApp}/>
         </div>
     </HashRouter>
     {/* <Main/> */}

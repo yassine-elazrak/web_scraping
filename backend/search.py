@@ -1,10 +1,10 @@
 
-import typing
 import twint
+from typing import *
 
 
 class Search:
-    def __init__(self, keys:List[], startTime:str, endTime :str, limitTweet:int , outFile:str) --> None:
+    def __init__(self, keys:List[str], startTime:str, endTime :str, limitTweet:int , outFile:str) -> None:
         self.configue = twint.Config()
         self.configue.Search = keys                                                    #keys Search or tagets search in twitter
         self.configue.Since = startTime                                                # date start Search minum 2006
@@ -14,7 +14,7 @@ class Search:
         self.configue.Output = outFile                                                 # name file the stroge 
         if limitTweet >= 0:                                                            # if limitTweet < 0 mean maxum tweet else number tweet == limitTweet
             self.configue.Limit = limitTweet                                           
-    def search(self)--> None:                                                                  
+    def search(self) -> None:                                                                  
         twint.run.Search(self.configue)                                                #run configuration 
         
 
@@ -22,3 +22,4 @@ class Search:
 
 
 
+# Search(['hello'], "2019-11-01", "2020-11-01",111 ,'test2').search()

@@ -4,3 +4,8 @@
     position:relative;
     overflow: hidden;
 }
+.svg-container{
+    width: 222px;
+    margin: 2px;
+
+}

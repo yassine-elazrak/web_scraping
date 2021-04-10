@@ -1,19 +1,23 @@
-import React  from 'react';
-import {makeStyles} from '@material-ui/core/styles'
+import { useCallback, useState } from 'react';
+import Circles  from './main';
 
-const useStyles = makeStyles({
-root:{
+function App() {
+  const [data, setData] = useState([10, 20, 30, 40, 50, 60, 70, 80]);
+  const updateData = useCallback(() => {
+    const count = 5 + Math.round(Math.random() * 15);
+    const values = [];
+    for (let i = 0; i < count; i++) {
+      values[i] = 10 + Math.round(Math.random() * 70);
+    }
+    setData(values);
+  }, []);
 
+  return (
+    <>
+      <button onClick={updateData}>Update Data</button>
+      <Circles data={data} />
+    </>
+  );
 }
-});
-const  App = ()=>{
-	const classes = useStyles();
-	return(
-		<div className={classes.root}>
-			<p>hello yassine   home</p>
-		</div>
-	)
-}
-
 
 export default App;

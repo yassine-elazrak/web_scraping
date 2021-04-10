@@ -1,19 +1,20 @@
 import React from 'react'
 import {makeStyles} from '@material-ui/core/styles';
-import {Chart, ChartPlotly} from './chart';
+import {ChartBar, ChartLine, ChartBie} from './chart';
 
 export default function Visualiton() {
     const classes = useStyles();
     return (
         <div className={classes.root}>
             <div className={classes.item}>
-                <Chart/>
+                <ChartBar/>
             </div>
             <div className={classes.item}>
-               <ChartPlotly/>
+               {/* <ChartPlotly/> */}
+               <ChartLine/>
             </div>
             <div className={classes.item}>
-                Item3
+                <ChartBie/>
             </div>
             <div className={classes.item}>
                {/* <ChartPlotly/> */}
