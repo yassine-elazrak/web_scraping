@@ -1,0 +1,86 @@
+//layout={ { width:'45 vw', font: {size: 18}, title: 'A Fancy Plot'} }
+  
+  
+  
+  
+  
+  {/* <Plot 
+ data={[{
+   values: [19, 26, 55],
+   labels: ['Residential', 'Non-Residential', 'Utility'],
+   type: 'pie'
+ }]}
+ layout={{
+   width: "100px", height: "100px",
+title: 'A Fancy Plot',
+}}
+// autosize: true
+// useResizeHandler={{true}}
+style={{width: "100px", height: "100px"}}
+ 
+config={{responsive: true}} */}
+  
+//   export const ChartPlotly = () => {
+//   return (
+//     <div>
+//         <Plot
+//         data={[{
+//           values: [19, 26, 55],
+//           labels: ['Residential', 'Non-Residential', 'Utility'],
+//           type: 'pie'
+//         }]}
+//         layout={ { width:'45vw', font: {size: 18}, title: 'A Fancy Plot'} }
+//         // config={{responsive: true}}
+//       />
+//     </div>
+//   )
+// }
+
+// // showlegend: false, width: 530,
+
+import { Line, Pie, Doughnut, Bar, Radar, Polar, Bubble, Scatter } from ‘react-chartjs-2’;.
+
+
+
+import React, {useEffect, useState} from 'react';
+import axios from 'axios'
+import { Hint } from 'react-autocomplete-hint';
+
+function App() {
+  const [hintData, setHintData] = useState([])
+  const [text, setText] = useState('')
+
+  const getData = async () => {
+    const res = await axios.get('https://jsonplaceholder.typicode.com/users')
+      var hintArray = []
+       res.data.map(a => hintArray.push(a.name))
+        setHintData(hintArray)
+  }
+
+  useEffect(()=> {
+    getData()
+  })
+
+  return (
+    <div>
+      <h5>Try typing these words</h5>
+      <code>{`[${hintData.toString()}]`}</code>
+      <br/>
+      <br/>
+      <br/>
+     {/* <Hint options={hintData}> */}
+    <input className='input-with-hint'
+        value={text}
+        onChange={e => setText(e.target.value)} 
+        
+        />
+      {/* </Hint> */}
+    </div>
+  );
+}
+
+export default App;
+
+
+
+
