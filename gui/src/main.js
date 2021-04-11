@@ -50,7 +50,10 @@ const Search = () => {
         <div>
           <Input {...props} />
         </div>
-        <div></div>
+        {/* <div className={classes.Auto}>
+        hello
+
+        </div> */}
       </div>
     </div>
   );
@@ -83,6 +86,10 @@ const useStyles = makeStyles({
   },
   but_item:{
     margin:' 1px 4px',
+  },
+  Auto:{
+    backgroundColor:'#858'
+
   }
 });
 
