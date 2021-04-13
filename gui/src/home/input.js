@@ -92,12 +92,12 @@ const Input = (props) => {
           <DeleteIcon />
         </IconButton>
       </div>
-        <hr className={classes.line}/>
+        {/* <hr className={classes.line}/>
       <div>
       fjfhdhfjhddfhdsf
       <br/>
       kfkdjfkjdkjfkdjkf
-      </div>
+      </div> */}
     </Paper>
   );
 };

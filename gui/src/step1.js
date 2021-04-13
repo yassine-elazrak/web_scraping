@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 // import Paper from '@material-ui/core/Paper';
 import DateAndTime from './date'; 
 import Clean from './clean';
-import Lang from './lang';
+import {Lang,Limet} from './lang';
 import SaveIcon from '@material-ui/icons/Save';
 import ReplayIcon from '@material-ui/icons/Replay';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
@@ -36,7 +36,7 @@ const dataDefault = {
 }
 
 const getStep = ()=>{
-    return ['settings date', 'settings clean data' , 'settings language and emoji'];
+    return ['settings date', 'settings clean data' , 'limet tweets','settings language and emoji'];
 };
 
 const Step1 = () => {
@@ -69,6 +69,8 @@ const Step1 = () => {
             case 1:
                 return <div><Clean {...props} /></div>;
             case 2:
+                return <div><Limet {...props}/></div>
+            case 3:
                 return <div> <Lang {...props} /> </div>;
             default:
                 return 'unknow id';

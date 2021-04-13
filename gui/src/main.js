@@ -74,7 +74,7 @@ const useStyles = makeStyles({
     backgroundColor: "#4263",
     height: "500",
     width: "500",
-    borderRadius: "20px",
+    borderRadius: "8px",
     alignItems: "center",
   },
   container_list: {
@@ -83,9 +83,10 @@ const useStyles = makeStyles({
     flexWrap: "wrap",
     alignItems: "start-end",
     maxWidth:'400px',
+    // padding:'4px',
   },
   but_item:{
-    margin:' 1px 4px',
+    margin:' 3px 3px',
   },
   Auto:{
     backgroundColor:'#858'

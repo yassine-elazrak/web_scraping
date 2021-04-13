@@ -5,7 +5,7 @@ import Select from '@material-ui/core/Select';
 
 
 
-const Lang = ({formData , setFormData}) => {
+export const Lang = ({formData , setFormData}) => {
 
     const [open, setOpen] = useState(false);
     const [open2, setOpen2] = useState(false);
@@ -99,4 +99,18 @@ const useStyles = makeStyles({
 
     },
 });
-export default Lang;
+
+
+export const Limet = (props) => {
+    const classes = useStyles();
+    const [size, setSize] = useState("inf");
+    
+    return (
+        <div className={classes.limet}>
+                Limet
+        </div>
+    )
+}
+
+
+
