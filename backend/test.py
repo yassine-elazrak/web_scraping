@@ -1,6 +1,7 @@
 import requests
 import json
 import inspect
+import pandas as pd
 
 data ={
     'keys': [22, 33, 55],
@@ -12,8 +13,9 @@ data ={
     'settings': {'defaultSettings': 'null' ,'22':'ee'}
 }
 
-r = requests.get("http://localhost:5000/search", json=data)
+r = requests.get("http://localhost:5000/search/432522", json=data)
 print(r.json())
+
 # print(inspect.getsource(json.loads))
 
 #   id = db.Column(db.Integer, primary_key=True)
@@ -21,3 +23,5 @@ print(r.json())
 #     password = db.Column(db.String(150))
 #     first_name = db.Column(db.String(150))
 
+# df = pd.read_csv('../tweets.csv')
+# print(list(zip(df['tweet'],df['user_id']))[2])
