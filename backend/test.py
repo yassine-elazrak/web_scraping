@@ -4,16 +4,18 @@ import inspect
 import pandas as pd
 
 data ={
-    'keys': [22, 33, 55],
-    'startTime': '2020-05-24T10:30',
-    'endTime': '2019-05-24T10:30',
+    'keys': ["morocco"],
+    'startTime': '2017-05-24',
+    'endTime': '2020-05-24',
     'language': 'english',
     'emoji': 'replace',
-    'size':'inf',
+    'folder':'.',
+    'file':'tweetyassine',
+    'size':'100',
     'settings': {'defaultSettings': 'null' ,'22':'ee'}
 }
 
-r = requests.get("http://localhost:5000/search/432522", json=data)
+r = requests.get("http://localhost:5000/search/", json=data)
 print(r.json())
 
 # print(inspect.getsource(json.loads))

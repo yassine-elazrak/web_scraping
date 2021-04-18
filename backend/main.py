@@ -4,6 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 from os import path
 import datetime
 import pandas as pd
+# from tools import run
+from threading import Thread
 # from  sqlalchemy.sql import fun ,_and
 
 app = Flask(__name__)
@@ -84,29 +86,33 @@ def query():
 # select tweet , user_id from tweet where user_id >=4 and user_id <= 5;
 
 class Search(Resource):
-    def get(self, id):
-        res = db.session.query(Tweet.tweet, Tweet.user_id).filter(Tweet.user_id <= 5, Tweet.user_id >=4).all()
-        print("==>", list(res))
-        return {'hello': 'get', 'name':id }, 200
+    def get(self):
+        # res = db.session.query(Tweet.tweet, Tweet.user_id).filter(Tweet.user_id <= 5, Tweet.user_id >=4).all()
+        # print("==>", list(res))
+        return {'hello': 'get', 'name':333 }, 200
 
     def post(self):
-        parser.add_argument('keys', action='append')
-        parser.add_argument('startTime')
-        parser.add_argument('endTime')
-        parser.add_argument('language')
-        parser.add_argument('emoji')
-        parser.add_argument('size')
-        parser.add_argument('settings', type=dict)
-        data = parser.parse_args()
+        # parser.add_argument('keys', action='append')
+        # parser.add_argument('startTime')
+        # parser.add_argument('endTime')
+        # parser.add_argument('language')
+        # parser.add_argument('emoji')
+        # parser.add_argument('size')
+        # parser.add_argument('folder')
+        # parser.add_argument('file')
+        # parser.add_argument('settings', type=dict)
+        # data = parser.parse_args()
+        # Thread(target=run, args=[data]).start()
+
        
         return {'hello': 'post'}, 200
 
 
-api.add_resource(Search, '/search/<int:id>')
+api.add_resource(Search, '/search/')
 
 if __name__ == '__main__':
-    create_db()
-    if FLAG:
-        FLAG=False
-        test()
+    # create_db()
+    # if FLAG:
+    #     FLAG=False
+    #     # test()
     app.run(debug=True)
