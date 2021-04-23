@@ -10,7 +10,8 @@ import {HashRouter,  Route} from 'react-router-dom';
 // import Chart from './chart';
 import Visualiton from './visualiton';
 // import {MultFrom} from './multFrom';
-import App from './main';
+// import App from './main';
+import App from './App';
 import Step1 from './step1';
 import Tables from './table';
 

@@ -1,23 +1,47 @@
-import React from 'react'
+import React ,{useState, useEffect}from 'react'
 import {makeStyles} from '@material-ui/core/styles';
-import {ChartBar, ChartLine, ChartBie, Chart4} from './chart';
+import {ChartBar, ChartLine, ChartBie, Chart4, LangSentiment,BarLnagSentiment, Sentiment} from './chart';
 import {Topics} from './topics';
+import axios from 'axios';
+
 // import Tables from './table';
 
 export default function Visualiton() {
     const classes = useStyles();
+    const [data , setData] = useState({sentiment:[], language: []});
+    useEffect(() =>{
+        async function fetData(){
+
+            const response = await axios({
+                method:'get',
+                url:'/chart',
+                headers:{'content-type':'application/json'},
+    
+            })
+            console.log('getData==>', response.data)
+            // setData({sentiment:response.data.sentiment, language: response.data.language})
+
+        }
+        fetData()
+    } ,[])
+    
+    const props = data
     return (
         <div className={classes.container}>
                 <div className={classes.root}>
                     <div className={classes.item}>
-                        <ChartBar/>
+                        {/* <ChartBar {...props}/> */}
+                        <BarLnagSentiment {...props}/>
                     </div>
                     <div className={classes.item}>
                     {/* <ChartPlotly/> */}
-                    <ChartLine/>
+                    {/* <ChartLine/>
+                     */}
+                     <Sentiment/>
                     </div>
                     <div className={classes.item}>
-                        <ChartBie/>
+                        {/* <ChartBie/> */}
+                        <LangSentiment/>
                     </div>
                     <div className={classes.item}>
                     <Chart4/>

@@ -1,4 +1,4 @@
-import React , {useState} from 'react'
+import React , {useState, useEffect} from 'react'
 import {makeStyles} from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/step';
@@ -14,7 +14,7 @@ import SaveIcon from '@material-ui/icons/Save';
 import ReplayIcon from '@material-ui/icons/Replay';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
-
+import axios from 'axios';
 
 const defaultSettings = {
     digit:false,
@@ -32,6 +32,9 @@ const dataDefault = {
     endTime:'2019-05-24T10:30',
     language:'english',
     emoji:'replace',
+    size: '',
+    file : '',
+    folder:'.',
     settings:defaultSettings,
 }
 
@@ -53,7 +56,6 @@ const Step1 = () => {
     };
     const handleReset = () => {
         console.log('Reset',formData, "Reset222close");
-        // setFormData(dataDefault);
         setActiveId(0);
     };
     const handleSave = ()=>{
@@ -76,6 +78,19 @@ const Step1 = () => {
                 return 'unknow id';
         }
     }
+    useEffect(()=>{
+
+        axios({
+            method:'post',
+            url:'/configue',
+            headers:{
+                'content-type':'application/json'
+            },
+            data :formData
+        })
+        console.log('effect data', formData)
+
+    },[formData])
     return (
         <div className={classes.root}>
             <Stepper  activeStep={activeId} orientation='vertical'>

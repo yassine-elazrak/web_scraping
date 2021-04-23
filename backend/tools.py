@@ -17,8 +17,9 @@ class Search:
         self.configue.Store_csv = True                                                 # type file storage csv
         self.configue.Hide_output = True                                               # hiding or ignore output stdout
         self.configue.Output = outFile                                                 # name file the stroge 
-        if limitTweet >= 0:                                                            # if limitTweet < 0 mean maxum tweet else number tweet == limitTweet
-            self.configue.Limit = limitTweet                                           
+        # if limitTweet > 0:                                                            # if limitTweet < 0 mean maxum tweet else number tweet == limitTweet
+        #     self.configue.Limit = limitTweet 
+        self.configue.Limit = 200                                          
     def search(self) -> None:                                                                  
         twint.run.Search(self.configue)   
 
@@ -71,10 +72,13 @@ class generatorDate:
 
 class Task:
     def __init__(self, args):
-        self.date =generatorDate(args['startTime'], args['endTime']).generator()
+        self.date =generatorDate(args['startTime'].split('T')[0], args['endTime'].split('T')[0]).generator()
         self.store = Store(args['folder'], args['file'])
         self.keys = args['keys']
-        self.Tweet = int(args['size'])
+        if args['size'] != '':
+            self.Tweet = int(args['size'])
+        else:
+            self.Tweet = -1
         self.listThread = []
     
     def myJobs(self, startTime, endTime, folder):
@@ -93,6 +97,7 @@ class Task:
             for Process in self.listThread:
                 Process.start()
             self.waiting()
+            print('folderuud',folder)
             self.store.concatFiles(folder)
 
 def run(data):

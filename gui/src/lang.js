@@ -2,7 +2,7 @@ import React ,{useState} from 'react'
 import {makeStyles} from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-
+import Switch from '@material-ui/core/Switch';
 
 
 export const Lang = ({formData , setFormData}) => {
@@ -101,13 +101,30 @@ const useStyles = makeStyles({
 });
 
 
-export const Limet = (props) => {
+export const Limet = ({formData, setFormData}) => {
     const classes = useStyles();
-    const [size, setSize] = useState("inf");
-    
+    // const [size, setSize] = useState('');
+    // const [file, setFile] = useState('');
+    const [flag, setFlag] = useState(true);
+
+    // const handleChangeFile = (event)=>{
+    //     setFile(event.target.value)
+    // }
+    // const handleChangeSize = (event)=>{
+    //     setSize(event.target.value)
+    // }
+    const {size, file} = formData;
+    const handleChange = (event)=>{
+        setFormData({...formData, [event.target.name]:event.target.value})
+    }
+
+    // console.log('data==>', formData)
+
     return (
         <div className={classes.limet}>
-                Limet
+            <input placeholder='enter name file'value={file} name='file' onChange={handleChange}></input>    
+            <Switch checked={flag} onChange={()=>{setFlag(!flag)}}/>
+            {flag && <input name='size' placeholder='enter size tweet' value={size} onChange={handleChange}/>}
         </div>
     )
 }

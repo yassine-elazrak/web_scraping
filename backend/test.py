@@ -15,9 +15,13 @@ data ={
     'settings': {'defaultSettings': 'null' ,'22':'ee'}
 }
 
-r = requests.get("http://localhost:5000/search/", json=data)
-print(r.json())
+# r = requests.post("http://localhost:5000/search/", json=data)
+# print(r.json())
+res = requests.get('http://localhost:5000/tweet',)
+print('res==>', res.json())
 
+# f = requests.get('http://localhost:5000/chart/3')
+# print(f.json())
 # print(inspect.getsource(json.loads))
 
 #   id = db.Column(db.Integer, primary_key=True)

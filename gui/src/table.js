@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -29,45 +30,11 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow);
 
-function createData(uid ,tweet, username,date, url) {
-  return {uid, tweet, username,date, url };
-}
-
-const rows = [
-  createData(v4(), "Frozen yoghurt", "@ilyhimeno", '2021-04-10' ,"https://www.google.com/"),
-  createData(v4(),"Ice cream sandwich", "@loly",'2021-04-10' , "https://www.google.com/"),
-  createData(v4(),"Eclair", "@NCT_DreamLab",'2021-04-10' , "https://www.google.com/"),
-  createData(v4(),"Cupcake", "@shins8u",'2021-04-10' , "https://www.google.com/"),
-  createData(v4(),"Gingerbread", "@NCT_DreamLab",'2021-04-10' , "https://www.google.com/"),
-  createData(v4(), "Frozen yoghurt", "@ilyhimeno", '2021-04-10' ,"https://www.google.com/"),
-  createData(v4(),"Ice cream sandwich", "@loly",'2021-04-10' , "https://www.google.com/"),
-  createData(v4(),"Eclair", "@NCT_DreamLab",'2021-04-10' , "https://www.google.com/"),
-  createData(v4(),"Cupcake", "@shins8u",'2021-04-10' , "https://www.google.com/"),
-  createData(v4(),"Gingerbread", "@NCT_DreamLab",'2021-04-10' , "https://www.google.com/"),
-  createData(v4(), "Frozen yoghurt", "@ilyhimeno", '2021-04-10' ,"https://www.google.com/"),
-  createData(v4(),"Ice cream sandwich", "@loly",'2021-04-10' , "https://www.google.com/"),
-  createData(v4(),"Eclair", "@NCT_DreamLab",'2021-04-10' , "https://www.google.com/"),
-  createData(v4(),"Cupcake", "@shins8u",'2021-04-10' , "https://www.google.com/"),
-  createData(v4(),"Gingerbread", "@NCT_DreamLab",'2021-04-10' , "https://www.google.com/"),
-  createData(v4(), "Frozen yoghurt", "@ilyhimeno", '2021-04-10' ,"https://www.google.com/"),
-  createData(v4(),"Ice cream sandwich", "@loly",'2021-04-10' , "https://www.google.com/"),
-  createData(v4(),"Eclair", "@NCT_DreamLab",'2021-04-10' , "https://www.google.com/"),
-  createData(v4(),"Cupcake", "@shins8u",'2021-04-10' , "https://www.google.com/"),
-  createData(v4(),"Gingerbread", "@NCT_DreamLab",'2021-04-10' , "https://www.google.com/"),
-  createData(v4(), "Frozen yoghurt", "@ilyhimeno", '2021-04-10' ,"https://www.google.com/"),
-  createData(v4(),"Ice cream sandwich", "@loly",'2021-04-10' , "https://www.google.com/"),
-  createData(v4(),"Eclair", "@NCT_DreamLab",'2021-04-10' , "https://www.google.com/"),
-  createData(v4(),"Cupcake", "@shins8u",'2021-04-10' , "https://www.google.com/"),
-  createData(v4(),"Gingerbread", "@NCT_DreamLab",'2021-04-10' , "https://www.google.com/"),
-
-  
-];
-
 const useStyles = makeStyles({
   table: {
     minWidth: 700,
   },
-  root:{
+  root: {
     backgroundColor: '#eceff0',
     padding: '18px',
 
@@ -76,10 +43,28 @@ const useStyles = makeStyles({
 
 export default function Tables() {
   const classes = useStyles();
-  const handleurl = () => {};
+  const handleurl = () => { };
+  const [rows, setRows] = useState([])
+
+  useEffect(() => {
+      async function getData()
+      {
+        const res = await axios({
+        method: 'get',
+        url: '/tweet',
+        headers: {
+          'Content-type': 'application/json'
+          },
+
+        })
+        setRows(res.data.data)
+      }
+      getData()
+  },[])
+
 
   return (
-    <div   className={classes.root}>
+    <div className={classes.root}>
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="customized table">
           <TableHead>
@@ -92,10 +77,10 @@ export default function Tables() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row , index) => (
+            {rows.map((row, index) => (
               <StyledTableRow key={row.uid}>
                 <StyledTableCell component="th" scope="row">
-                  {row.tweet} 
+                  {row.tweet}
                 </StyledTableCell>
                 {/* <StyledTableCell align="right">{row.tweet}</StyledTableCell> */}
                 <StyledTableCell align="left">{row.username}</StyledTableCell>
