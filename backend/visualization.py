@@ -5,6 +5,7 @@ from collections import Counter
 from sklearn.feature_extraction.text import TfidfVectorizer
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 
 df = pd.read_csv('./tweet.csv')
 
@@ -27,25 +28,31 @@ def analyzeSentiment(df):
     df.to_csv('./tweet.csv')
     # print(**Counter(df['language']))
     print(dictt)
+    # print(df.columns)
+    # print(df['place'].head(100))
     # plt.pie(dictt.values(),labels=dictt.keys())
     # plt.show()
-analyzeSentiment(df)
+# analyzeSentiment(df)
 
-def cluster(df):
+def cluster():
+    df = pd.read_csv('./tweet.csv')
     vectorizer = TfidfVectorizer(analyzer='word', 
                               token_pattern=r'\b[a-zA-Z]{3,}\b',
                               ngram_range=(1, 1) 
                               )  
     data = vectorizer.fit_transform(df['tweet']).toarray()
-    print(data)
+  
     pca = PCA(n_components=2)
     p = pca.fit_transform(data)
-    print('---------------------\n\n\n')
-    print(p)
-    kmeans = KMeans(n_clusters=3).fit(data)
-    print('-----\n\n\n', kmeans.labels_)  
+    df['pca'] = list(p)
+    
+    kmeans = KMeans(n_clusters=5).fit(data)
+    df['kmeans'] = list(kmeans.labels_)
+    df.to_csv('./tweet.csv')
 
-# cluster(df) 
+    # print('-----\n\n\n', kmeans.labels_,p)  
+
+cluster() 
 
 
 

@@ -1,6 +1,12 @@
 import axios from 'axios';
 import React , {useState, useEffect} from 'react';
 import {Bar,Line,Pie,Radar, Scatter} from 'react-chartjs-2';
+// import { WordCloudController, WordElement } from 'chartjs-chart-wordcloud';
+import ReactWordcloud from 'react-wordcloud';
+import words from './data';
+
+
+
 // import Plotly from "plotly.js-basic-dist";
 // import createPlotlyComponent from "react-plotly.js/factory";
 // import "./test.css"
@@ -192,130 +198,6 @@ export const ChartBar = (props) => {
   }
 
 
-  export const BarLnagSentiment = ({sentiment, language})=>{
-
-
-    // console.log('barlangsenti,rnt',sentiment , language)
-    const state = {
-      labels: [],
-      datasets: [
-        {
-          label: 'positive',
-          backgroundColor: "lightblue",
-          borderColor: "blue",
-          borderWidth: 1,
-          data: []
-        },
-  
-        {
-          label: "negative",
-          backgroundColor: "lightgreen",
-          borderColor: "green",
-          borderWidth: 1,
-          data: []
-        },
-        {
-          label: "neural",
-          backgroundColor: "yellow",
-          borderColor: "orange",
-          borderWidth: 1,
-          data: []
-        },
-       
-      ]
-    };
-    const options = {
-      responsive: true,
-      legend: {
-        position: "top"
-      },
-      title: {
-        display: true,
-        text: " Nb Tweets per Sentiment and Language"
-      },
-      scales: {
-        xAxes: [{
-          stacked: true,
-          // barThickness: 1,  // number (pixels) or 'flex'
-          // maxBarThickness: 18 // number (pixels)
-      }],
-        yAxes: [{
-          stacked: true,
-          ticks: {
-            beginAtZero: true
-          }
-        }]
-      }
-    };
-    const [data, setData] = useState(state);
-    const {labels, positive, negative, neural} = data;
-    useEffect(() => {
-      console.log('config')
-      async function fetData(){
-        const response = await axios({
-          methd:'get',
-          url : '/barlangsentiment',
-          headers:{'content-type':'application/json'},
-        });
-        init(response);
-        console.log('success barls', response.data)
-        
-
-      };
-      const init = (res)=>{
-        // console.log('dubg', res.data)
-        setData(
-        {
-          labels: res.data.keys,
-          datasets: [
-            {
-              label: 'positive',
-              backgroundColor: "lightblue",
-              borderColor: "blue",
-              borderWidth: 1,
-              data: res.data.positive
-            },
-      
-            {
-              label: "negative",
-              backgroundColor: "lightgreen",
-              borderColor: "green",
-              borderWidth: 1,
-              data: res.data.negative
-            },
-            {
-              label: "neural",
-              backgroundColor: "yellow",
-              borderColor: "orange",
-              borderWidth: 1,
-              data: res.data.neutral
-            },
-           
-          ]
-        }
-        )
-      }
-      fetData();
-      console.log('response', data);
-     
-    }, [])
-
-
-
-    return(
-      <div>
-        <Bar
-          data={data}
-          options={options}
-          layout={ { width:'45vw', font: {size: 18}, title: 'A Fancy Plot'} }
-
-        />
-        {/* {JSON.stringify(data)} */}
-      </div>
-    )
-  }
-
-
 
 
 
@@ -391,10 +273,10 @@ export const ChartBar = (props) => {
 
 const state4 = {
   dataLine: {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September","October","November","December"],
     datasets: [
       {
-        label: "My First dataset",
+        label: "tweets negative",
         fill: true,
         lineTension: 0.3,
         backgroundColor: "rgba(225, 204,230, .3)",
@@ -412,13 +294,13 @@ const state4 = {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: [65, 59, 80, 81, 56, 55, 40]
+        data: [65, 59, 80, 81, 56, 55, 40,23,45,67,22,37]
       },
       {
-        label: "My Second dataset",
+        label: "tweets positive",
         fill: true,
         lineTension: 0.3,
-        backgroundColor: "rgba(184, 185, 210, .3)",
+        backgroundColor: "rgba(14, 125, 210, .3)",
         borderColor: "rgb(35, 26, 136)",
         borderCapStyle: "butt",
         borderDash: [],
@@ -429,12 +311,33 @@ const state4 = {
         pointBorderWidth: 10,
         pointHoverRadius: 5,
         pointHoverBackgroundColor: "rgb(0, 0, 0)",
-        pointHoverBorderColor: "rgba(220, 220, 220, 1)",
+        pointHoverBorderColor: "rgba(20, 120, 20, 1)",
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: [28, 48, 40, 19, 86, 27, 90]
-      }
+        data: [28, 48, 40, 19, 86, 27, 90,33,22,67,84,23]
+      },
+      {
+        label: "tweets neutral",
+        fill: true,
+        lineTension: 0.3,
+        backgroundColor: "rgba(215, 24,280, .3)",
+        borderColor: "rgb(215, 130, 188)",
+        borderCapStyle: "butt",
+        borderDash: [],
+        borderDashOffset: 0.0,
+        borderJoinStyle: "miter",
+        pointBorderColor: "rgb(205, 130,1 58)",
+        pointBackgroundColor: "rgb(255, 255, 255)",
+        pointBorderWidth: 10,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: "rgb(0, 0, 0)",
+        pointHoverBorderColor: "rgba(210, 210, 210,1)",
+        pointHoverBorderWidth: 2,
+        pointRadius: 1,
+        pointHitRadius: 10,
+        data: [95, 9, 10, 21, 76, 55, 30,33,2,25,77,44]
+      },
     ]
   }
 };
@@ -453,300 +356,71 @@ export const Chart4= (props) => {
     
   }
   // https://chartjs-plugin-datalabels.netlify.app/samples/charts/radar.html
-  export const LangSentiment = ()=>{
-    const statelang = {
-      dataRadar: {
-        labels: ["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"],
-        datasets: [
-          {
-            label: "My First dataset",
-            backgroundColor: "rgba(194, 116, 161, 0.5)",
-            borderColor: "rgb(194, 116, 161)",
-            data: [65, 59, 90, 81, 56, 55, 40]
-          },
-          {
-            label: "My Second dataset",
-            backgroundColor: "rgba(71, 225, 167, 0.5)",
-            borderColor: "rgb(71, 225, 167)",
-            data: [28, 48, 40, 19, 96, 27,100]
-          }
-        ]
-      }
+  // export const TopicSentiment = ()=>{
+  //   const statelang = {
+  //     dataRadar: {
+  //       labels: ['Topic#1','Topic#2','Topic#3','Topic#4','Topic#5'],
+  //       datasets: [
+  //         {
+  //           label: "tweets positive",
+  //           backgroundColor: "rgba(194, 116, 161, 0.5)",
+  //           borderColor: "rgb(194, 116, 161)",
+  //           data: [65, 59, 90, 81, 56]
+  //         },
+  //         {
+  //           label: "tweets negative",
+  //           backgroundColor: "rgba(71, 225, 167, 0.5)",
+  //           borderColor: "rgb(71, 225, 167)",
+  //           data: [28, 48, 40, 19, 296]
+  //         },
+  //         {
+  //           label: "tweets neural",
+  //           backgroundColor: "rgba(11, 25, 167, 0.5)",
+  //           borderColor: "rgb(11, 25, 197)",
+  //           data: [28, 8, 4, 33, 266,]
+  //         }
+  //       ]
+  //     }
   
-    }
-
-    return (
-      <div>
-        <Radar data={statelang.dataRadar} options={{ responsive: true }} />
-      </div>
-    )
-  }
-
-
-  
-  export const Sentiment = ()=>{
-
-
-    // const state = 
-
-
-
-
-    // console.log('barlangsenti,rnt',sentiment , language)
-  
-
-    const options = {
-      responsive: true,
-      legend: {
-        position: "top"
-      },
-      title: {
-        display: true,
-        text: " Nb Tweets per Sentiment and Language"
-      },
-      scales: {
-        xAxes: [{
-          stacked: true,
-          // barThickness: 1,  // number (pixels) or 'flex'
-          // maxBarThickness: 18 // number (pixels)
-      }],
-        yAxes: [{
-          stacked: true,
-          ticks: {
-            beginAtZero: true
-          }
-        }]
-      }
-    };
-    const [data, setData] = useState(state);
-    const {labels, positive, negative, neural} = data;
-    useEffect(() => {
-      console.log('config')
-      async function fetData(){
-        const response = await axios({
-          methd:'get',
-          url : '/sentiment',
-          headers:{'content-type':'application/json'},
-        });
-        init(response);
-        console.log('senti,em', response.data)
-        
-
-      };
-      const init = (res)=>{
-        // console.log('dubg', res.data)
-        setData(
-          {
-            labels: ['positive', 'negative','neutral'],
-            datasets: [
-              {
-                label: 'Rainfall',
-                backgroundColor: [
-                  '#B21F00',
-                  '#2FDE00',
-                  '#00A6B4',
-                ],
-                hoverBackgroundColor: [
-                '#501800',
-                '#4B5000',
-                '#175000',
-              
-                ],
-                data: res.data.sentiment
-              }
-            ]
-          }
-        )
-      }
-      fetData();
-      console.log('response', data);
-     
-    }, [])
-
-
-
-    return(
-      <div>
-        <Pie
-          data={data}
-          options={options}
-          layout={ { width:'45vw', font: {size: 18}, title: 'A Fancy Plot'} }
-
-        />
-        {/* {JSON.stringify(data)} */}
-      </div>
-    )
-  }
-
-
-
-  // export const Chart4= (props) => {
-  //   // console.log('hello')
-  //   // const name = Bar
-  //     return (
-  //       <div>
-          
-  //         <Line data={state4.dataLine} options={{ responsive: true }} />
-      
-  //       </div>
-  //     );
-      
   //   }
-    // https://chartjs-plugin-datalabels.netlify.app/samples/charts/radar.html
-    // export const LangSentiment = ()=>{
-    //   const statelang = {
-    //     dataRadar: {
-    //       labels: ["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"],
-    //       datasets: [
-    //         {
-    //           label: "My First dataset",
-    //           backgroundColor: "rgba(194, 116, 161, 0.5)",
-    //           borderColor: "rgb(194, 116, 161)",
-    //           data: [65, 59, 90, 81, 56, 55, 40]
-    //         },
-    //         {
-    //           label: "My Second dataset",
-    //           backgroundColor: "rgba(71, 225, 167, 0.5)",
-    //           borderColor: "rgb(71, 225, 167)",
-    //           data: [28, 48, 40, 19, 96, 27,100]
-    //         }
-    //       ]
-    //     }
-    
-    //   }
-  
-    //   return (
-    //     <div>
-    //       <Radar data={statelang.dataRadar} options={{ responsive: true }} />
-    //     </div>
-    //   )
-    // }
-  
-  
-export const Cluster = ()=>{
-  
-  
-      // const state = 
-  
-  
-  
-  
-      // console.log('barlangsenti,rnt',sentiment , language)
-    
-  
-      const options = {
-        responsive: true,
-        legend: {
-          position: "top"
-        },
-        title: {
-          display: true,
-          text: " Nb Tweets per Sentiment and Language"
-        },
-        scales: {
-          xAxes: [{
-            stacked: true,
-            // barThickness: 1,  // number (pixels) or 'flex'
-            // maxBarThickness: 18 // number (pixels)
-        }],
-          yAxes: [{
-            stacked: true,
-            ticks: {
-              beginAtZero: true
-            }
-          }]
-        }
-      };
-      // const [data, setData] = useState(state);
-      // useEffect(() => {
-      //   console.log('config')
-      //   async function fetData(){
-      //     const response = await axios({
-      //       methd:'get',
-      //       url : '/sentiment',
-      //       headers:{'content-type':'application/json'},
-      //     });
-      //     init(response);
-      //     console.log('senti,em', response.data)
-          
-  
-      //   };
-      //   const init = (res)=>{
-      //     setData(
-      //       {
-      //         labels: ['positive', 'negative','neutral'],
-      //         datasets: [
-      //           {
-      //             label: 'Rainfall',
-      //             backgroundColor: [
-      //               '#B21F00',
-      //               '#2FDE00',
-      //               '#00A6B4',
-      //             ],
-      //             hoverBackgroundColor: [
-      //             '#501800',
-      //             '#4B5000',
-      //             '#175000',
-                
-      //             ],
-      //             data: res.data.sentiment
-      //           }
-      //         ]
-      //       }
-      //     )
-      //   }
-      //   fetData();
-      //   console.log('response', data);
-       
-      // }, [])
-  
-      const data = {
-        datasets: [{
-          label: 'Scatter Dataset',
-          data: [{
-            x: -10,
-            y: 0
-          }, {
-            x: 0,
-            y: 10
-          }, {
-            x: 10,
-            y: 5
-          }, {
-            x: 0.5,
-            y: 5.5
-          }],
-          backgroundColor: 'rgb(255, 99, 132)'
-        },
-        {
-          label: 'Scatter Dataset1',
-          data: [{
-            x: -0.3,
-            y: 2
-          }, {
-            x: 0,
-            y: 1
-          }, {
-            x: 1,
-            y: 5.4
-          }, {
-            x: 2.5,
-            y: 5
-          }],
-          backgroundColor: 'rgb(255, 229, 111)'
-        }
-      ],
-      };
-  
-      return(
-        <div>
-          <Scatter
-            data={data}
-            options={options}
-            layout={ { width:'45vw', font: {size: 18}, title: 'A Fancy Plot'} }
-  
-          />
-          {/* {JSON.stringify(data)} */}
-        </div>
-      )
-    }
+
+  //   return (
+  //     <div>
+  //       <Radar data={statelang.dataRadar} options={{ responsive: true }} />
+  //     </div>
+  //   )
+  // }
+
+
+
+
+export const Word = ()=>{
+  const options = {
+    colors: ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b"],
+    enableTooltip: true,
+    deterministic: false,
+    fontFamily: "impact",
+    fontSizes: [5, 60],
+    fontStyle: "normal",
+    fontWeight: "normal",
+    padding: 1,
+    rotations: 3,
+    rotationAngles: [0, 90],
+    scale: "sqrt",
+    spiral: "archimedean",
+    transitionDuration: 1000,
+    title:'hello'
+  };
+ 
+  return (
+    <div>
+      <p style={{textAlign:'center', }}>hello</p>
+    <div>
+
+    <ReactWordcloud words={words} options={options}  />
+    </div>
+    {/* <h1>hello</h1>*/}
+
+    </div>
+  )
+}

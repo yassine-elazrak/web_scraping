@@ -92,8 +92,35 @@ def tweet():
 def sentiment():
     df  = pd.read_csv('./tweet.csv')
     res = Counter(df['sentiment'])
-    print('sen==>',res, "---", [res['positve'], res['negative'],res['neutral']])
+    # print('sen==>',res, "---", [res['positve'], res['negative'],res['neutral']])
     return {'sentiment':[res['positve'], res['negative'],res['neutral']]},200
-    
-        
+def language():
+    df = pd.read_csv('./tweet.csv')
+    res = Counter(df['language']).most_common(6)
+    # print('languagr', list(map(lambda x: x[0] ,res)))
+    return {'keys':list(map(lambda x: x[0] ,res)), 'values':list(map(lambda x: x[1] ,res))},200
+
+def sentimenttopic():
+    df = pd.read_csv('./tweet.csv')
+    keys = ['positve', 'neutral', 'negative']
+    res = {key : [] for key in keys}
+    for index in range(5):
+        s = dict(Counter(df[df['topic']==index]['sentiment']))
+        # {'positve': 18, 'neutral': 32, 'negative': 6}
+        for key in keys:
+            # res[key] = list([s['positve'],s['negative'], s['neutral']])
+            res[key].append(s[key])
+    print(res)
+
+    return {'data':res} ,200
+
+def kmeans():
+    # df = dp.read_csv('./tweet.csv')
+    # res = dict.formkeys([i for i in range(5)],[])
+
+
+    return {'lolo':'lala'},200
+
+
+
 
