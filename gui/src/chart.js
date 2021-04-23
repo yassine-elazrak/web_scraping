@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React , {useState, useEffect} from 'react';
-import {Bar,Line,Pie,Radar} from 'react-chartjs-2';
+import {Bar,Line,Pie,Radar, Scatter} from 'react-chartjs-2';
 // import Plotly from "plotly.js-basic-dist";
 // import createPlotlyComponent from "react-plotly.js/factory";
 // import "./test.css"
@@ -577,3 +577,176 @@ export const Chart4= (props) => {
       </div>
     )
   }
+
+
+
+  // export const Chart4= (props) => {
+  //   // console.log('hello')
+  //   // const name = Bar
+  //     return (
+  //       <div>
+          
+  //         <Line data={state4.dataLine} options={{ responsive: true }} />
+      
+  //       </div>
+  //     );
+      
+  //   }
+    // https://chartjs-plugin-datalabels.netlify.app/samples/charts/radar.html
+    // export const LangSentiment = ()=>{
+    //   const statelang = {
+    //     dataRadar: {
+    //       labels: ["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"],
+    //       datasets: [
+    //         {
+    //           label: "My First dataset",
+    //           backgroundColor: "rgba(194, 116, 161, 0.5)",
+    //           borderColor: "rgb(194, 116, 161)",
+    //           data: [65, 59, 90, 81, 56, 55, 40]
+    //         },
+    //         {
+    //           label: "My Second dataset",
+    //           backgroundColor: "rgba(71, 225, 167, 0.5)",
+    //           borderColor: "rgb(71, 225, 167)",
+    //           data: [28, 48, 40, 19, 96, 27,100]
+    //         }
+    //       ]
+    //     }
+    
+    //   }
+  
+    //   return (
+    //     <div>
+    //       <Radar data={statelang.dataRadar} options={{ responsive: true }} />
+    //     </div>
+    //   )
+    // }
+  
+  
+export const Cluster = ()=>{
+  
+  
+      // const state = 
+  
+  
+  
+  
+      // console.log('barlangsenti,rnt',sentiment , language)
+    
+  
+      const options = {
+        responsive: true,
+        legend: {
+          position: "top"
+        },
+        title: {
+          display: true,
+          text: " Nb Tweets per Sentiment and Language"
+        },
+        scales: {
+          xAxes: [{
+            stacked: true,
+            // barThickness: 1,  // number (pixels) or 'flex'
+            // maxBarThickness: 18 // number (pixels)
+        }],
+          yAxes: [{
+            stacked: true,
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      };
+      // const [data, setData] = useState(state);
+      // useEffect(() => {
+      //   console.log('config')
+      //   async function fetData(){
+      //     const response = await axios({
+      //       methd:'get',
+      //       url : '/sentiment',
+      //       headers:{'content-type':'application/json'},
+      //     });
+      //     init(response);
+      //     console.log('senti,em', response.data)
+          
+  
+      //   };
+      //   const init = (res)=>{
+      //     setData(
+      //       {
+      //         labels: ['positive', 'negative','neutral'],
+      //         datasets: [
+      //           {
+      //             label: 'Rainfall',
+      //             backgroundColor: [
+      //               '#B21F00',
+      //               '#2FDE00',
+      //               '#00A6B4',
+      //             ],
+      //             hoverBackgroundColor: [
+      //             '#501800',
+      //             '#4B5000',
+      //             '#175000',
+                
+      //             ],
+      //             data: res.data.sentiment
+      //           }
+      //         ]
+      //       }
+      //     )
+      //   }
+      //   fetData();
+      //   console.log('response', data);
+       
+      // }, [])
+  
+      const data = {
+        datasets: [{
+          label: 'Scatter Dataset',
+          data: [{
+            x: -10,
+            y: 0
+          }, {
+            x: 0,
+            y: 10
+          }, {
+            x: 10,
+            y: 5
+          }, {
+            x: 0.5,
+            y: 5.5
+          }],
+          backgroundColor: 'rgb(255, 99, 132)'
+        },
+        {
+          label: 'Scatter Dataset1',
+          data: [{
+            x: -0.3,
+            y: 2
+          }, {
+            x: 0,
+            y: 1
+          }, {
+            x: 1,
+            y: 5.4
+          }, {
+            x: 2.5,
+            y: 5
+          }],
+          backgroundColor: 'rgb(255, 229, 111)'
+        }
+      ],
+      };
+  
+      return(
+        <div>
+          <Scatter
+            data={data}
+            options={options}
+            layout={ { width:'45vw', font: {size: 18}, title: 'A Fancy Plot'} }
+  
+          />
+          {/* {JSON.stringify(data)} */}
+        </div>
+      )
+    }

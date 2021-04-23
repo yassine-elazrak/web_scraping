@@ -1,6 +1,6 @@
 import React ,{useState, useEffect}from 'react'
 import {makeStyles} from '@material-ui/core/styles';
-import {ChartBar, ChartLine, ChartBie, Chart4, LangSentiment,BarLnagSentiment, Sentiment} from './chart';
+import {ChartBar, ChartLine, ChartBie, Chart4,Cluster, LangSentiment,BarLnagSentiment, Sentiment} from './chart';
 import {Topics} from './topics';
 import axios from 'axios';
 
@@ -44,7 +44,8 @@ export default function Visualiton() {
                         <LangSentiment/>
                     </div>
                     <div className={classes.item}>
-                    <Chart4/>
+                    {/* <Chart4/> */}
+                    <Cluster/>
                     </div>
                     
                 </div>
