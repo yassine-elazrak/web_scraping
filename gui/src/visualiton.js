@@ -14,27 +14,34 @@ import { BarLnagSentiment } from "./stats";
 import { Kmeans } from "./cluster";
 import {TopicSentiment} from './topics';
 import axios from "axios";
+import { DialogTitle } from "@material-ui/core";
 
 // import Tables from './table';
 
 export default function Visualiton() {
   const classes = useStyles();
-  // const [data , setData] = useState({sentiment:[], language: []});
+  // const [data , setData] = useState([]);
   // useEffect(() =>{
   //     async function fetData(){
 
   //         const response = await axios({
   //             method:'get',
-  //             url:'/chart',
+  //             url:'/textsentiment',
   //             headers:{'content-type':'application/json'},
 
   //         })
-  //         console.log('getData==>', response.data)
+  //         // console.log('getData==>', response.data.text[0].title)
+  //         setData(response.data.text)
   //         // setData({sentiment:response.data.sentiment, language: response.data.language})
 
   //     }
   //     fetData()
   // } ,[])
+  // const positive = data[0]
+  // const negative = data[1]
+  // const neutral = data[2]
+
+  // console.log({positive, negative , neutral, data})
 
   // const props = data
   return (
@@ -63,15 +70,17 @@ export default function Visualiton() {
         </div>
 
         <div className={classes.item}>
-          {/* <Language /> */}
-          {/* <ChartBar {...props}/> */}
-          <Word />
-        </div>
-        <div className={classes.item}>
           {/* <ChartPlotly/> */}
           {/* <ChartLine/> */}
           {/* <Sentiment /> */}
           <Chart4 />
+        </div>
+
+        
+        <div className={classes.item}>
+          {/* <Language /> */}
+          {/* <ChartBar {...props}/> title='{positive.title}' words={positive.words}*/}
+          <Word  />
         </div>
 
         <div className={classes.item}>
@@ -79,7 +88,7 @@ export default function Visualiton() {
           {/* <ChartBar {...props}/> */}
           <Word />
         </div>
-        
+
         <div className={classes.item}>
           {/* <Language /> */}
           {/* <ChartBar {...props}/> */}

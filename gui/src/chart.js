@@ -411,10 +411,11 @@ export const Word = ()=>{
     transitionDuration: 1000,
     title:'hello'
   };
+  // console.log('word_title', title)
  
   return (
     <div>
-      <p style={{textAlign:'center', }}>hello</p>
+      <p style={{textAlign:'center', }}><h2>hello text</h2></p>
     <div>
 
     <ReactWordcloud words={words} options={options}  />

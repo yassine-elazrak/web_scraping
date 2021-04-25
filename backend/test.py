@@ -17,7 +17,7 @@ data ={
 
 # r = requests.post("http://localhost:5000/search/", json=data)
 # print(r.json())
-res = requests.get('http://localhost:5000/tweet',)
+res = requests.get('http://localhost:5000/texttopic')
 print('res==>', res.json())
 
 # f = requests.get('http://localhost:5000/chart/3')

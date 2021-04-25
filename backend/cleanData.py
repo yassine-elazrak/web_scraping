@@ -6,6 +6,7 @@ import demoji
 from deep_translator import GoogleTranslator
 from nltk.stem import PorterStemmer
 import pandas as pd
+from deep_translator import exceptions as excp
 
 defaultSettings = {
     'digit': True,
@@ -39,7 +40,16 @@ class Clean:
         self.df.to_csv('tweet.csv')
 
     def translate(self, text):
-        return self.translator.translate(text)
+        # return self.translator.translate(text if len(text) < 5000 else text[:4998])
+        try:
+            v = text
+            # if len(text) < 5000:
+            v = self.translator.translate(text)
+            #     v=  self.translator.translate(text[:4999]
+        except :
+            v = text
+        return v
+        # return text
 
     def Emoji(self, text):
         if self.kwargs['emoji'] == 'stay':
@@ -75,6 +85,7 @@ class Clean:
             strs = filter(lambda text: text and text.isalpha(), strs)
         if self.kwargs['settings']['lowercase']:
             strs = map(lambda text: text.lower(), strs)
+        strs = filter(lambda word: len(word) > 2, strs)
         return ' '.join(strs)
 
     def stemming(self, text):

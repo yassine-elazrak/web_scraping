@@ -106,6 +106,7 @@ export const Kmeans = () => {
           url:'/kmeans',
           headers:{'content-type':'application/json'},
         });
+        setData({datasets:response.data.datasets})
         console.log('kmeans==>', response.data)
     }
     fetData({});
@@ -113,7 +114,7 @@ export const Kmeans = () => {
   return (
     <div className={classes.topic}>
       <Scatter
-        data={state}
+        data={data}
         options={options}
         layout={{ width: "100", font: { size: 18 }, title: "A Fancy Plot" }}
       />

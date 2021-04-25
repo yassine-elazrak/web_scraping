@@ -44,7 +44,9 @@ def cluster():
   
     pca = PCA(n_components=2)
     p = pca.fit_transform(data)
-    df['pca'] = list(p)
+    df['pcax'] = list(map(lambda x:x[0],p))
+    df['pcay'] = list(map(lambda x:x[1],p))
+
     
     kmeans = KMeans(n_clusters=5).fit(data)
     df['kmeans'] = list(kmeans.labels_)
