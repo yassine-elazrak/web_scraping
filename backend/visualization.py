@@ -4,10 +4,14 @@ from sklearn.cluster import KMeans
 from collections import Counter
 from sklearn.feature_extraction.text import TfidfVectorizer
 import pandas as pd
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 import numpy as np
+import pickle
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.decomposition import LatentDirichletAllocation
+from collections import Counter
 
-df = pd.read_csv('./tweet.csv')
+# df = pd.read_csv('./tweet.csv')
 
 def sentiment(text):
     result = TextBlob(text)
@@ -20,22 +24,40 @@ def sentiment(text):
 
 def analyzeSentiment(df):
     df['sentiment'] = df['tweet'].apply(sentiment)
-    fig = plt.figure(figsize=(8,5))
+    # fig = plt.figure(figsize=(8,5))
     dictt = Counter(df['sentiment'])
     # Counter(df['language'])
     # 
 
-    df.to_csv('./tweet.csv')
+    # df.to_csv('./tweet.csv')
+    
     # print(**Counter(df['language']))
-    print(dictt)
+    # print(dictt)
     # print(df.columns)
     # print(df['place'].head(100))
     # plt.pie(dictt.values(),labels=dictt.keys())
     # plt.show()
+    return df
 # analyzeSentiment(df)
 
-def cluster():
-    df = pd.read_csv('./tweet.csv')
+
+def topic(df):
+    cv = CountVectorizer(max_df=0.95, min_df=2, stop_words='english')
+    LDA = LatentDirichletAllocation(n_components=5, random_state=42)
+    dtm = cv.fit_transform(df['tweet'])
+    LDA.fit(dtm)
+    res = {index: {'title': None, 'data': None} for index in range(5)}
+
+    for index, topic in enumerate(LDA.components_):
+        res[index]['title'] = f'THE TOP 100 WORDS FOR TOPIC #{index + 1}'
+        res[index]['data'] = [cv.get_feature_names()[i]
+                              for i in topic.argsort()[-100:]]
+    topic_results = LDA.transform(dtm)
+    df['topic'] = topic_results.argmax(axis=1)
+    return df
+
+def cluster(df):
+    # df = pd.read_csv('./tweet.csv')
     vectorizer = TfidfVectorizer(analyzer='word', 
                               token_pattern=r'\b[a-zA-Z]{3,}\b',
                               ngram_range=(1, 1) 
@@ -46,15 +68,14 @@ def cluster():
     p = pca.fit_transform(data)
     df['pcax'] = list(map(lambda x:x[0],p))
     df['pcay'] = list(map(lambda x:x[1],p))
-
-    
     kmeans = KMeans(n_clusters=5).fit(data)
     df['kmeans'] = list(kmeans.labels_)
-    df.to_csv('./tweet.csv')
+    # df.to_csv('./tweet.csv')
+    return df
 
     # print('-----\n\n\n', kmeans.labels_,p)  
 
-cluster() 
+
 
 
 

@@ -6,8 +6,10 @@ import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import Brightness6Icon from "@material-ui/icons/Brightness6";
 import AddIcon from "@material-ui/icons/Add";
-import DeleteIcon from "@material-ui/icons/Delete";
-import Button from "@material-ui/core/Button";
+import SearchIcon from '@material-ui/icons/Search';
+import axios from 'axios';
+
+
 import { v4 } from "uuid";
 
 const useStyles = makeStyles((theme) => ({
@@ -60,10 +62,28 @@ const Input = (props) => {
       setItem({ id: v4(), title: "" });
     }
   };
-  const handleDelete = () => {
-    setItem({ id: v4(), title: "" });
-    setTag([]);
-  };
+  // const handleDelete = () => {
+  //   setItem({ id: v4(), title: "" });
+  //   setTag([]);
+  // };
+  const handleSearch = () => {
+       
+    var lst = []
+    tag.map(item => lst.push(item.title))
+    if (lst.length ==0)
+        return
+    axios({
+        method:'post',
+        url:'/search',
+    headers:{'content-type':'application/json'},
+        data : lst,
+
+
+    })
+    .then(response => console.log(response))
+    .catch(error=>console.log(error))
+
+};
 
   console.log("hello yassine", tag);
 
@@ -87,9 +107,9 @@ const Input = (props) => {
         <IconButton
           color="primary"
           className={classes.iconButton}
-          onClick={handleDelete}
+          onClick={handleSearch}
         >
-          <DeleteIcon />
+          <SearchIcon />
         </IconButton>
       </div>
         {/* <hr className={classes.line}/>

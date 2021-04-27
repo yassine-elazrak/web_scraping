@@ -3,28 +3,15 @@ import { makeStyles } from "@material-ui/core/styles";
 import Input from "./home/input";
 import Button from "@material-ui/core/Button";
 import ClearIcon from '@material-ui/icons/Clear';
+import DeleteIcon from '@material-ui/icons/Delete'
+import SearchIcon from '@material-ui/icons/Search';
 // import {v4} from 'uuid';
 
-const Search = () => {
+const Search2 = () => {
   const classes = useStyles();
-  // const [text, setText] = useState({id: v4() , title: ''});
   const [tag, setTag] = useState([]);
 
-  // const handleChange = (event)=>{
-  //   setText((prev)=>{
-  //     return {id: prev.id , title: event.target.value}
-  //   })
-  // };
 
-  // const handleAdd = ()=>{
-  //   if (text.trim())
-  //   {
-  //     setTag(prev=>{
-  //       return [...prev, text]
-  //     })
-  //     setText({id: v4(), title:''});
-  //   }
-  // };
 
   const handleDelete = (id)=>{
     setTag(prev=>{
@@ -32,6 +19,31 @@ const Search = () => {
     })
 
   };
+//   const delete_element = (id) => {
+//     setNewItem((prev) => {
+//         return prev.filter(item => item.id !== id);
+//     })
+    
+// }
+// const handleSearch = () => {
+   
+//     var lst = []
+//     newItem.map(item => lst.push(item.itemName))
+//     if (lst.length ==0)
+//         return
+//     axios({
+//         method:'post',
+//         url:'/search',
+//     headers:{'content-type':'application/json'},
+//         data : lst,
+
+
+//     })
+//     .then(response => console.log(response))
+//     .catch(error=>console.log(error))
+
+// };
+
 
   const props = { tag, setTag };
   return (
@@ -54,6 +66,15 @@ const Search = () => {
         hello
 
         </div> */}
+         {/* <br />
+            <div className={classes.butt}>
+                <Button type='button' onClick={() => {}}>
+                    <DeleteIcon /> Delete All
+                </Button>
+                <Button >
+                    <SearchIcon /> Search
+                </Button>
+            </div> */}
       </div>
     </div>
   );
@@ -94,4 +115,4 @@ const useStyles = makeStyles({
   }
 });
 
-export default Search;
+export default Search2;

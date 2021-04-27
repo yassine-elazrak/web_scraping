@@ -1,17 +1,19 @@
 import sqlite3
 import pickle
 import pandas as pd
+
 #insert into Tweets (tweet ,creat_date) VALUES('hello','2020-11-22')
 #[ id   tweet date   sentiment cluster  topic   cleanTweet pcax , pcay url ]
 #SELECT * FROM Tweets WHERE strftime('%m', creat_date) = '02'
 # UPDATE Tweets set tweet = 'ff' WHERE id = 2
 # sqlite3.register_adapter(list, pickle.dumps)
 # sqlite3.register_adapter(set, pickle.dumps)
+
 class db:
-    sqlite3.register_converter('pickle', pickle.loads)
     data = [('hello11', '2020-01-22',0),('hello1', '2020-01-22',0),('hello2', '2020-02-22',0),('hello22', '2020-02-12',0),('helloee', '2020-03-25',0),]
     # _conn=None
     def __init__(self, name):
+        sqlite3.register_converter('pickle', pickle.loads)
         self._conn = sqlite3.connect(name, detect_types=sqlite3.PARSE_DECLTYPES)
         self.create_schema()
         # self.insert()
@@ -79,9 +81,9 @@ class db:
             print('data==>',r)
 
 
-s = db('test2.db')
-# s.addFile()
-s.update_column()
+# s = db('test2.db')
+# # s.addFile()
+# s.update_column()
 
 
 

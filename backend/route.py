@@ -8,7 +8,7 @@ from os import path
 from collections import Counter
 import pickle
 
-data = {'startTime': '2018-09-05T10:30', 'endTime': '2020-07-24T10:30', 'language': 'english', 'emoji': 'replace', 'size': '', 'file': 'tweet.csv', 'folder': '.',
+data = {'startTime': '2018-09-05T10:30', 'endTime': '2020-07-24T10:30', 'language': 'en', 'emoji': 'replace', 'size': '', 'file': 'tweet.csv', 'folder': '.',
  'settings': {'digit': True, 'punctuation': True, 'ulrs': True, 'lowercase': True, 'diacritics': True, 'whitespace': True, 'fillna': True, 'stemming': True, 'Name': True}}
 
 
@@ -145,7 +145,7 @@ def textsentiment():
     keys = ['positve', 'neutral', 'negative']
     for index, s in enumerate(keys):
         text = ''.join(list(map(str,df[df['sentiment']== s]['cleanTweet'])))
-        data = list(map(lambda tuple : {tuple[0] : tuple[1]} , Counter(text.split()).most_common(100)))
+        data = list(map(lambda tuple : {'text':tuple[0] ,'value': tuple[1]} , Counter(text.split()).most_common(200)))
         res[index] = {'title':f'words {s}' , 'words':data}
     # print('data==>', res)
 
@@ -160,20 +160,32 @@ def monthsentiment():#[1 23]
         s = dict(Counter(s))
         for key in keys:
             res[key].append(s[key] if key in s.keys() else 0)
-    print(res)
+    # print('sentiment0000',res)
     
     """
     {'positve': [0, 0, 0, 54, 0, 0, 0, 0, 0, 0, 0, 0], 'neutral': [0, 0, 0, 314, 0, 0, 0, 0, 0, 0, 0, 0], 'negative': [0, 0, 0, 32, 0, 0, 0, 0, 0, 0, 0, 0]}
     """
-    return {}
+    return {'data':res},200
 
+#  {
+#       text: 'told',
+#       value: 64,
+#     },
+#     {
 def texttopic():
     topic={}
+    res=[]
     with open('topics','rb') as df:
         topic = pickle.load(df)
+    for key, value in topic.items():
+        # print('=====>',key , value['data'],end='\n')
+        res.append({'title': value['title'],'words':list(map(lambda text: {'text':text,'value':1},value['words'])) })
+    print('topics==>',res)
+    return {'text':res}, 200
 
-    print(topic)
-    return {}, 200
+# def monthsentiment():
+
+#     return {'ss':'monthsentimwnt'},200
 
 
 

@@ -21,6 +21,6 @@ app.add_url_rule('/kmeans', methods=['GET'], view_func=route.kmeans)
 app.add_url_rule('/textsentiment',methods=['GET'], view_func=route.textsentiment)
 app.add_url_rule('/monthsentiment', methods=['GET'], view_func=route.monthsentiment)
 app.add_url_rule('/texttopic', methods=['GET'], view_func=route.texttopic)
-
+app.add_url_rule('/monthsentiment', methods=['GET'],view_func=route.monthsentiment)
 if __name__ == '__main__':
     app.run(debug=True)

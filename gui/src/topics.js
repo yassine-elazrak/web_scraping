@@ -1,9 +1,10 @@
 import axios from 'axios';
 import React , {useState, useEffect} from 'react';
 import {Bar,Line,Pie,Radar, Scatter} from 'react-chartjs-2';
+import {makeStyles} from '@material-ui/core/styles';
 // import { WordCloudController, WordElement } from 'chartjs-chart-wordcloud';
 import ReactWordcloud from 'react-wordcloud';
-
+import {Word} from './chart';
 
 export const TopicSentiment = ()=>{
   // const statelang = {
@@ -79,3 +80,69 @@ export const TopicSentiment = ()=>{
     </div>
   )
 }
+
+
+export const Topicstext = () => {
+  const [data, setData] = useState([]);
+  const classes = useStyles()
+
+  useEffect(() => {
+      async function fetData(){
+      const response = await axios({
+        method:'GET',
+        url:'/texttopic',
+        headers:{
+          'Content-Type':'application/json',
+        }
+
+        })
+        const res = response.data.text;
+        setData(res)
+        // console.log('data topic text')
+      }
+      fetData()
+  },[])
+  return (
+    <div className={classes.root}>
+      
+      {data.map((item)=>{
+              return (<div className={classes.item}>
+             {/* <Language /> */}
+             {/* <ChartBar {...props}/> title='{positive.title}' words={positive.words}*/}
+                <Word name={item.title} data={item.words}/>
+              </div>)
+
+          })}
+      
+      
+    </div>
+  )
+}
+
+const useStyles = makeStyles({
+
+  root: {
+    display: "grid",
+    // width:'100%',
+    gridTemplateColumns: "repeat(2,1fr)",
+    gridAutoRows: "minmax(340px,auto)",
+    gridAutoColumns: "minmax(340px,auto)",
+
+    gap: "20px",
+    // backgroundColor:"red",
+    // display:'flex',
+    // flexWrap:'wrap',
+    // color: '#fff',
+    // transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  },
+  item: {
+    display: "flex",
+    backgroundColor: "#ffff",
+    flexDirection: "column",
+    justifyContent: "center",
+    borderRadius: "10px",
+    // padding:'1em',
+  },
+})
+
+

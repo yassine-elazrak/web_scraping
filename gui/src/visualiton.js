@@ -5,45 +5,48 @@ import {
   ChartLine,
   ChartBie,
   Word,
-  Chart4,
+  Monthsentiment,
   
 } from "./chart";
 import { Sentiment, Language } from "./tandences";
 import { BarLnagSentiment } from "./stats";
 // import { Topics } from "./topics";
 import { Kmeans } from "./cluster";
-import {TopicSentiment} from './topics';
+import {TopicSentiment,Topicstext} from './topics';
 import axios from "axios";
 import { DialogTitle } from "@material-ui/core";
+import Words from './data'
 
 // import Tables from './table';
 
 export default function Visualiton() {
   const classes = useStyles();
-  // const [data , setData] = useState([]);
-  // useEffect(() =>{
-  //     async function fetData(){
+  const [data , setData] = useState([]);
+  useEffect(() =>{
+      async function fetData(){
 
-  //         const response = await axios({
-  //             method:'get',
-  //             url:'/textsentiment',
-  //             headers:{'content-type':'application/json'},
+          const response = await axios({
+              method:'get',
+              url:'/textsentiment',
+              headers:{'content-type':'application/json'},
 
-  //         })
-  //         // console.log('getData==>', response.data.text[0].title)
-  //         setData(response.data.text)
-  //         // setData({sentiment:response.data.sentiment, language: response.data.language})
+          })
+          // console.log('getData==>', response.data.text[0].title)
+          setData(response.data.text)
+          // setData({sentiment:response.data.sentiment, language: response.data.language})
 
-  //     }
-  //     fetData()
-  // } ,[])
+      }
+      fetData()
+  } ,[])
   // const positive = data[0]
   // const negative = data[1]
   // const neutral = data[2]
 
-  // console.log({positive, negative , neutral, data})
+  // console.log("visualition==>",positive, negative , neutral, data)
 
   // const props = data
+  const name = "hello yassine"
+
   return (
     <div className={classes.container}>
       <div className={classes.root}>
@@ -73,27 +76,20 @@ export default function Visualiton() {
           {/* <ChartPlotly/> */}
           {/* <ChartLine/> */}
           {/* <Sentiment /> */}
-          <Chart4 />
+          <Monthsentiment />
         </div>
 
         
-        <div className={classes.item}>
-          {/* <Language /> */}
-          {/* <ChartBar {...props}/> title='{positive.title}' words={positive.words}*/}
-          <Word  />
-        </div>
+       
+          {data.map((item)=>{
+              return (<div className={classes.item}>
+             {/* <Language /> */}
+             {/* <ChartBar {...props}/> title='{positive.title}' words={positive.words}*/}
+                <Word name={item.title} data={item.words}/>
+              </div>)
 
-        <div className={classes.item}>
-          {/* <Language /> */}
-          {/* <ChartBar {...props}/> */}
-          <Word />
-        </div>
-
-        <div className={classes.item}>
-          {/* <Language /> */}
-          {/* <ChartBar {...props}/> */}
-          <Word />
-        </div>
+          })}
+       
 
       </div>
 
@@ -104,35 +100,11 @@ export default function Visualiton() {
         <Kmeans />
       </div>
       {/* //+++++===================================================== */}
-      <div className={classes.root}>
-        <div className={classes.item}>
-          <Language />
-          {/* <ChartBar {...props}/> */}
-          {/* <Word/> */}
-        </div>
-        <div className={classes.item}>
-          {/* <ChartPlotly/> */}
-          {/* <ChartLine/>
-           */}
-          <Sentiment />
-        </div>
-        <div className={classes.item}>
-          {/* <ChartBie/> */}
-          <TopicSentiment />
-        </div>
-        <div className={classes.item}>
-          {/* <Chart4/> */}
-          {/* <Cluster/> */}
-          <BarLnagSentiment />
-        </div>
-      </div>
+      {/* <div className={classes.root}> */}
+        <Topicstext/>
+      {/* </div> */}
 
-      <div>
-        {/* <Topics /> */}
-        {/* <Tables/> */}
-        {/* <Cluster/> */}
-        <Kmeans />
-      </div>
+     
     </div>
   );
 }
@@ -164,14 +136,5 @@ const useStyles = makeStyles({
     justifyContent: "center",
     borderRadius: "10px",
     // padding:'1em',
-  },
-  item2: {
-    backgroundColor: "red",
-  },
-  item3: {
-    backgroundColor: "#784",
-  },
-  item4: {
-    backgroundColor: "yellow",
   },
 });

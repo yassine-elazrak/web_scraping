@@ -30,25 +30,25 @@ dataDefault = {
 
 
 class Clean:
-    def __init__(self, args):
-        self.df = pd.read_csv('tweet.csv')
+    def __init__(self,file ,args):
+        self.df = pd.read_csv(file)
         self.kwargs = args
         self.stemmer = PorterStemmer()
         self.translator = GoogleTranslator(
             source='auto', target=args['language'])
         self.df['cleanTweet'] = self.df['tweet'].apply(self.execute)
-        self.df.to_csv('tweet.csv')
+        self.df.to_csv(file)
 
     def translate(self, text):
         # return self.translator.translate(text if len(text) < 5000 else text[:4998])
-        try:
-            v = text
-            # if len(text) < 5000:
-            v = self.translator.translate(text)
-            #     v=  self.translator.translate(text[:4999]
-        except :
-            v = text
-        return v
+        # try:
+        #     v = text
+        #     # if len(text) < 5000:
+        #     v = self.translator.translate(text)
+        #     #     v=  self.translator.translate(text[:4999]
+        # except :
+        #     v = text
+        return text
         # return text
 
     def Emoji(self, text):
@@ -105,9 +105,9 @@ class Clean:
         return text
 
 
-def test():
-    clean = Clean(dataDefault)
+# def test():
+#     clean = Clean(dataDefault)
 
 
-if __name__ == '__main__':
-    test()
+# if __name__ == '__main__':
+#     test()

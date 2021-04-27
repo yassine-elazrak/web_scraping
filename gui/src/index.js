@@ -14,6 +14,7 @@ import Visualiton from './visualiton';
 import App from './App';
 import Step1 from './step1';
 import Tables from './table';
+import Search2 from './main';
 
 
 // import Clean from './clean';
@@ -22,10 +23,10 @@ ReactDOM.render( <React.StrictMode >
     <HashRouter>
         <Header/>
         <div>
-            <Route path="/" exact component={Barsearch} />
+            <Route path="/" exact component={Search2} />
             <Route path="/visualition" exact component={Visualiton} />
             <Route path= "/configuration" exact component={Step1}/>
-            <Route path="/main" exact component={App}/>
+            <Route path="/main" exact component={Search2}/>
             <Route path='/table' exact component={Tables} />
 
         </div>

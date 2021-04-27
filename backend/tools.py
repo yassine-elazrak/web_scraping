@@ -7,6 +7,8 @@ from glob import glob
 import pandas as pd
 import csv
 from threading import Thread
+from cleanData import Clean
+from  visualization import analyzeSentiment,cluster, topic
 
 class Search:
     def __init__(self, keys:List[str], startTime:str, endTime :str, limitTweet:int , outFile:str) -> None:
@@ -31,7 +33,7 @@ class Store:
     header= ["id", "conversation_id", "created_at", "date", "time", "timezone", "user_id", "username", "name", "place", "tweet", "language", "mentions", "urls", "photos",
                   "replies_count", "retweets_count", "likes_count", "hashtags",
                   "cashtags", "link", "retweet", "quote_url", "video", "thumbnail", "near", "geo", "source",
-                  "user_rt_id", "user_rt", "retweet_id", "reply_to", "retweet_date", "translate", "trans_src", "trans_dest"]
+                  "user_rt_id", "user_rt", "retweet_id", "reply_to", "retweet_date", "translate", "trans_src", "trans_dest","cleanTweet"]
 
     def __init__(self, folder=".", file="tweet.csv")->None:
         self.file = file
@@ -44,6 +46,11 @@ class Store:
             df = pd.read_csv(file)
             listFile.append(df)
         df = pd.concat(listFile)
+        ###
+        df = analyzeSentiment(df)
+        df = cluster(df)
+        df = topic(df)
+        print('=====================================>topic\n\n')
         df.to_csv(self.file, index=False)
 
     def addDatatbase(self):
@@ -75,6 +82,7 @@ class Task:
         self.date =generatorDate(args['startTime'].split('T')[0], args['endTime'].split('T')[0]).generator()
         self.store = Store(args['folder'], args['file'])
         self.keys = args['keys']
+        self.settings = args
         if args['size'] != '':
             self.Tweet = int(args['size'])
         else:
@@ -85,7 +93,8 @@ class Task:
         file = folder + '/' + str(uuid.uuid4())+'.csv'
         Twint = Search(keys=self.keys, startTime=startTime, endTime=endTime,limitTweet=self.Tweet ,outFile=file)
         Twint.search()
-
+        Clean(file,self.settings)
+    ###
     def waiting(self):
         for Process in self.listThread:
             Process.join()
