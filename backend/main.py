@@ -22,5 +22,8 @@ app.add_url_rule('/textsentiment',methods=['GET'], view_func=route.textsentiment
 app.add_url_rule('/monthsentiment', methods=['GET'], view_func=route.monthsentiment)
 app.add_url_rule('/texttopic', methods=['GET'], view_func=route.texttopic)
 app.add_url_rule('/monthsentiment', methods=['GET'],view_func=route.monthsentiment)
+app.add_url_rule('/nbtweets',methods=['GET'], view_func=route.nbtweets)
+
+
 if __name__ == '__main__':
     app.run(debug=True)

@@ -90,6 +90,7 @@ const useStyles = makeStyles({
     backgroundColor: "#FFF",
     alignItems: "center",
     // alignItems:'flex-end',
+    // backgroundImage: `url("")`
   },
   items: {
     backgroundColor: "#4263",

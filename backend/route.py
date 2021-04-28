@@ -180,8 +180,24 @@ def texttopic():
     for key, value in topic.items():
         # print('=====>',key , value['data'],end='\n')
         res.append({'title': value['title'],'words':list(map(lambda text: {'text':text,'value':1},value['words'])) })
-    print('topics==>',res)
+    # print('topics==>',res)
     return {'text':res}, 200
+
+def nbtweets():
+    df = pd.read_csv('./tweet.csv')
+    # res=[5]*None
+    # print('uuuu==>', len(df[df['sentiment']=='positve']))
+    # res[0] = {'title':'Tweets Positive','data':''}
+    # keys=['Tweets Positive','Tweets Negative','Tweets Neutral', 'Number of Tweets', 'Number Topics']
+    res = [{'title':'Tweets Positive','data':len(df[df['sentiment']=='positve'])}, \
+        {'title':'Tweets Negative','data':len(df[df['sentiment']=='negative'])},\
+            {'title':'Tweets Neutral','data':len(df[df['sentiment']=='neutral'])},\
+        {'title':'Number of Tweets','data':len(df['sentiment'])},\
+            {'title':'Number Topics','data':len(dict(Counter(df['topic'])))}
+                 ]
+    # print('000000===>', res) 
+
+    return {'text':res},200
 
 # def monthsentiment():
 

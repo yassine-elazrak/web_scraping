@@ -9,13 +9,14 @@ import {
   
 } from "./chart";
 import { Sentiment, Language } from "./tandences";
-import { BarLnagSentiment } from "./stats";
+import { BarLnagSentiment,Statics } from "./stats";
 // import { Topics } from "./topics";
 import { Kmeans } from "./cluster";
 import {TopicSentiment,Topicstext} from './topics';
 import axios from "axios";
 import { DialogTitle } from "@material-ui/core";
 import Words from './data'
+
 
 // import Tables from './table';
 
@@ -49,6 +50,10 @@ export default function Visualiton() {
 
   return (
     <div className={classes.container}>
+      <div className={classes.statics}>
+        <Statics/>
+      </div>
+
       <div className={classes.root}>
         <div className={classes.item}>
           <Language />
@@ -110,6 +115,21 @@ export default function Visualiton() {
 }
 
 const useStyles = makeStyles({
+  statics:{
+    // display:'flex',
+    // flexDirection:'row',
+    // flexWrap:'wrap',
+    
+    display: "grid",
+    // width:'100%',
+    gridTemplateColumns: "repeat(5,1fr)",
+    gridAutoRows: "minmax(100px,auto)",
+    gridAutoColumns: "minmax(100px,auto)",
+
+    gap: "20px",
+
+
+  },
   container: {
     backgroundColor: "#eceff0",
     padding: "18px",
@@ -135,6 +155,7 @@ const useStyles = makeStyles({
     flexDirection: "column",
     justifyContent: "center",
     borderRadius: "10px",
+   
     // padding:'1em',
   },
 });
