@@ -110,14 +110,24 @@ def language():
 
 def sentimenttopic():
     df = pd.read_csv('./tweet.csv')
+    labels = list(['Topic#1','Topic#2','Topic#3','Topic#4','Topic#5','Topic#6','Topic#6','Topic#7','Topic#8','Topic#9','Topic#10'])
+
     keys = ['positve', 'neutral', 'negative']
     res = {key: [] for key in keys}
-    for index in range(5):
+    res['labels'] = []
+    n = len(Counter(df['topic']).keys())
+    print("sentimetpoic nn==>", n, "\n\n")
+    for index in range(n):
         s = dict(Counter(df[df['topic'] == index]['sentiment']))
         # {'positve': 18, 'neutral': 32, 'negative': 6}
+        # print('sentientopics==>', s,"\n\n\n")
+        res['labels'].append(labels[index])
         for key in keys:
             # res[key] = list([s['positve'],s['negative'], s['neutral']])
-            res[key].append(s[key])
+            if not key in s.keys():
+                res[key].append(0)
+            else:
+                res[key].append(s[key])
     # print(res)
 
     return {'data': res}, 200
@@ -125,15 +135,17 @@ def sentimenttopic():
 
 def kmeans():
     df = pd.read_csv('./tweet.csv')
-    res = dict.fromkeys([i for i in range(5)], [])
+    n = len(Counter(df['kmeans']).keys())
+    res = dict.fromkeys([i for i in range(n)], [])
     datasets = []
-    colors = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b"]
+    colors = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b","#FF0000","#00FF00","#FFFF00","#0000FF"]
     clusters = ['cluster1', 'cluster2', 'cluster3',
-        'cluster4', 'cluster5', 'cluster6']
-    for index in range(5):
+        'cluster4', 'cluster5', 'cluster6','cluster7','cluster8','cluster9','cluster10' ]
+    print('kknbr classes==>',n)
+    for index in range(n):
         datasets.append({
             'label': clusters[index],
-            'data': [{'x': x, 'y': y} for x, y in zip(df['pcax'], df['pcay'])],
+            'data': [{'x': x*20*(3 + index), 'y': y*20*(3+index)} for x, y in zip(df['pcax'], df['pcay'])],
             'backgroundColor': colors[index]
         })
     return {'datasets': datasets}, 200
@@ -175,6 +187,7 @@ def monthsentiment():#[1 23]
 def texttopic():
     topic={}
     res=[]
+
     with open('topics','rb') as df:
         topic = pickle.load(df)
     for key, value in topic.items():

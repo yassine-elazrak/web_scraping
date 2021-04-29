@@ -34,22 +34,23 @@ class Clean:
         self.df = pd.read_csv(file)
         self.kwargs = args
         self.stemmer = PorterStemmer()
-        self.translator = GoogleTranslator(
-            source='auto', target=args['language'])
+        # self.translator = GoogleTranslator(
+        #     source='auto', target='en')#args['language']
+        self.translate = GoogleTranslator(source='auto', target='en')
+
         self.df['cleanTweet'] = self.df['tweet'].apply(self.execute)
         self.df.to_csv(file)
 
-    def translate(self, text):
-        # return self.translator.translate(text if len(text) < 5000 else text[:4998])
-        # try:
-        #     v = text
-        #     # if len(text) < 5000:
-        #     v = self.translator.translate(text)
-        #     #     v=  self.translator.translate(text[:4999]
-        # except :
-        #     v = text
-        return text
-        # return text
+    def translate222(self, text):
+        def filter_text(text):
+            if not text:
+                return text
+            if len(text) < 5000:
+                return (self.translate.translate(text))
+            return self.translate.translate(text[:4999])
+        return filter_text(text)
+
+   
 
     def Emoji(self, text):
         if self.kwargs['emoji'] == 'stay':
@@ -100,7 +101,7 @@ class Clean:
         text = self.punctuation(text)
         text = self.whitespace(text)
         text = self.cleanString(text)
-        text = self.translate(text)
+        text = self.translate222(text)
         text = self.stemming(text)
         return text
 

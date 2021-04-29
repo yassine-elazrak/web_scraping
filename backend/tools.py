@@ -48,9 +48,9 @@ class Store:
         df = pd.concat(listFile)
         ###
         df = analyzeSentiment(df)
-        df = cluster(df)
-        df = topic(df)
-        print('=====================================>topic\n\n')
+        df, n = cluster(df)
+        df = topic(df ,n)
+        print('=====================================>',n,'topic\n\n')
         df.to_csv(self.file, index=False)
 
     def addDatatbase(self):

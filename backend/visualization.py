@@ -10,6 +10,8 @@ import pickle
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.decomposition import LatentDirichletAllocation
 from collections import Counter
+from math import sqrt
+from kneed import KneeLocator
 
 # df = pd.read_csv('./tweet.csv')
 
@@ -41,17 +43,20 @@ def analyzeSentiment(df):
 # analyzeSentiment(df)
 
 
-def topic(df):
+def topic(df, n):
     cv = CountVectorizer(max_df=0.95, min_df=2, stop_words='english')
-    LDA = LatentDirichletAllocation(n_components=5, random_state=42)
+    LDA = LatentDirichletAllocation(n_components=n)
     dtm = cv.fit_transform(df['tweet'])
     LDA.fit(dtm)
-    res = {index: {'title': None, 'data': None} for index in range(5)}
+    res = {index: {'title': None, 'words': None} for index in range(n)}
 
     for index, topic in enumerate(LDA.components_):
         res[index]['title'] = f'THE TOP 100 WORDS FOR TOPIC #{index + 1}'
-        res[index]['data'] = [cv.get_feature_names()[i]
+        res[index]['words'] = [cv.get_feature_names()[i]
                               for i in topic.argsort()[-100:]]
+    with open('topics', 'wb') as fd:
+        # print('------------tpics file------------\n\n\n\n\n')
+        pickle.dump(res , fd)
     topic_results = LDA.transform(dtm)
     df['topic'] = topic_results.argmax(axis=1)
     return df
@@ -68,12 +73,58 @@ def cluster(df):
     p = pca.fit_transform(data)
     df['pcax'] = list(map(lambda x:x[0],p))
     df['pcay'] = list(map(lambda x:x[1],p))
-    kmeans = KMeans(n_clusters=5).fit(data)
-    df['kmeans'] = list(kmeans.labels_)
-    # df.to_csv('./tweet.csv')
-    return df
 
-    # print('-----\n\n\n', kmeans.labels_,p)  
+    # calculating the within clusters sum-of-squares for 19 cluster amounts
+    # sum_of_squares = calculate_wcss(data)
+    
+    # calculating the optimal number of clusters
+    # n = optimal_number_of_clusters(sum_of_squares)
+    # print('keamns--------->',n,'\n\n\n')
+    # kmeans = KMeans(n_clusters=n).fit(data)
+    # df['kmeans'] = list(kmeans.labels_)
+    # df.to_csv('./tweet.csv')
+    df , n = testk(df , data)
+    return df,n
+def testk(df, data):
+    kmeans_kwargs = {
+      "init": "random",
+       "n_init": 10,
+       "max_iter": 500,
+       "random_state": 42, }
+
+    sse = []
+    for k in range(1, 9):
+        kmeans = KMeans(n_clusters=k, **kmeans_kwargs)
+        kmeans.fit(data)
+        sse.append(kmeans.inertia_)
+    kl = KneeLocator(range(1, 9), sse, curve="convex", direction="decreasing")
+    n  = kl.elbow
+    kmeans = KMeans(n_clusters=n).fit(data)
+    df['kmeans'] = list(kmeans.labels_)
+    return df , n
+    # print('-----\n\n\n', kmeans.labels_,p) 
+
+def calculate_wcss(data):
+        wcss = []
+        for n in range(1, 8):
+            kmeans = KMeans(n_clusters=n)
+            kmeans.fit(X=data)
+            wcss.append(kmeans.inertia_)
+    
+        return wcss
+
+def optimal_number_of_clusters(wcss):####https://jtemporal.com/kmeans-and-elbow-method/
+    x1, y1 = 2, wcss[0]
+    x2, y2 = 7, wcss[len(wcss)-1]
+
+    distances = []
+    for i in range(len(wcss)):
+        x0 = i+2
+        y0 = wcss[i]
+        numerator = abs((y2-y1)*x0 - (x2-x1)*y0 + x2*y1 - y2*x1)
+        denominator = sqrt((y2 - y1)**2 + (x2 - x1)**2)
+        distances.append(numerator/denominator)
+    return distances.index(max(distances)) + 2
 
 
 
