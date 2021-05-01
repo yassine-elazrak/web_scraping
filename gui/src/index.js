@@ -24,9 +24,9 @@ ReactDOM.render( <React.StrictMode >
         <Header/>
         <div>
             <Route path="/" exact component={Search2} />
-            <Route path="/visualition" exact component={Visualiton} />
+            <Route path="/visualition" exact  render={()=> <Visualiton namePath="file"/>} />
             <Route path= "/configuration" exact component={Step1}/>
-            <Route path="/main" exact component={Search2}/>
+            <Route path="/main" exact  render={()=> <Visualiton namePath="database"/>} />
             <Route path='/table' exact component={Tables} />
 
         </div>

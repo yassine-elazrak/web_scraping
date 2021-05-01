@@ -21,18 +21,21 @@ class db:
   
     def create_schema(self):
         cursor =self._conn.cursor()
-        cursor.execute("CREATE TABLE IF NOT EXISTS Tweets (id INTEGER PRIMARY KEY AUTOINCREMENT, tweet TEXT,sentiment TEXT, creat_date DATE, topic INTEGER, url TEXT, cleanTweet TEXT, pcax REAL ,\
+        cursor.execute("CREATE TABLE IF NOT EXISTS Tweets (id INTEGER PRIMARY KEY AUTOINCREMENT, tweet TEXT,sentiment TEXT, date DATE, topic INTEGER, link TEXT, cleanTweet TEXT, pcax REAL ,\
             pcay REAL)")
         cursor.execute("CREATE TABLE IF NOT EXISTS art (id INTEGER PRIMARY KEY ,line pickle, parent pickle)")
         self._conn.commit()
  
     def addFile(self):
         df = pd.read_csv('./tweet.csv')
-        cursor = self._conn.cursor()
-        data = list(zip(df['tweet'],df['sentiment'],df['date'],df['topic'],df['link'],df['cleanTweet'],df['pcax'],df['pcay']))
-        cursor.executemany('INSERT INTO Tweets(tweet ,sentiment, creat_date , topic , url , cleanTweet , pcax  ,\
-            pcay) VALUES(?,?,?,?,?,?,?,?)', data)
-        self._conn.commit()
+        # cursor = self._conn.cursor()
+        # data = list(zip(df['tweet'],df['sentiment'],df['date'],df['topic'],df['link'],df['cleanTweet'],df['pcax'],df['pcay']))
+        # cursor.executemany('INSERT INTO Tweets(tweet ,sentiment, date , topic , link , cleanTweet , pcax  ,\
+        #     pcay) VALUES(?,?,?,?,?,?,?,?)', data)
+        # self._conn.commit()
+        df.to_sql(name='p', con=self._conn,if_exists='append')
+        # print()
+
 
         # print(data)
     def update_column(self):
@@ -43,6 +46,26 @@ class db:
         data = [(i**2, i) for i in range(1, n+1)]
         cursor.executemany('UPDATE Tweets SET topic=? WHERE id=?', data)
         self._conn.commit()
+    def to_df(self):##https://stackoverflow.com/questions/36028759/how-to-open-and-convert-sqlite-database-to-pandas-dataframe
+        # name_dict = {
+        #     'Name': ['a','b','c','d'],
+        #     'Score': [90,80,95,20]
+        #   }
+
+        # df = pd.DataFrame(name_dict)
+
+        # print (df)
+        corr = self._conn
+        df = pd.read_sql_query("SELECT * FROM Tweets", corr)
+        # print(df.head())
+        df.to_csv('ff.csv')
+
+
+        # d = corr.execute('SELECT * FROM Tweets')
+        # for data in d:
+        #     print('data==>',data)
+
+        # self._conn.commit()
 
 
 
@@ -81,8 +104,9 @@ class db:
             print('data==>',r)
 
 
-# s = db('test2.db')
-# # s.addFile()
+s = db('test2.db')
+s.addFile()
+# s.to_df()
 # s.update_column()
 
 

@@ -6,6 +6,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import DeleteIcon from '@material-ui/icons/Delete'
 import SearchIcon from '@material-ui/icons/Search';
 // import {v4} from 'uuid';
+import background from './imgtweet.png';
 
 const Search2 = () => {
   const classes = useStyles();
@@ -47,7 +48,7 @@ const Search2 = () => {
 
   const props = { tag, setTag };
   return (
-    <div className={classes.container}>
+    <div className={classes.container} style={{ backgroundImage: `url(${background})` }}>
       <div className={classes.items}>
         <div className={classes.container_list}>
           {tag.map((item) => {

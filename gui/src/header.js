@@ -31,6 +31,7 @@ function Header() {
             </ul>
           </nav>
           </HashRouter>
+          <div className={classes.logo}>hello</div>
       </div>
       )
 }
@@ -57,6 +58,12 @@ const useStyles = makeStyles({
   li:{
     padding: '2px 22px',
     textDecoration:'none',
+  }
+  ,
+  logo:{
+    // alignSelf:'flex-end',
+    // justifyContent: 'flex-end',
+
   }
 
 });

@@ -20,16 +20,21 @@ import Words from './data'
 
 // import Tables from './table';
 
-export default function Visualiton() {
+export default function Visualiton({namePath}) {
   const classes = useStyles();
   const [data , setData] = useState([]);
+  console.log("name page ====>>",namePath,"<<=======")
   useEffect(() =>{
       async function fetData(){
 
           const response = await axios({
-              method:'get',
+              method:'post',
               url:'/textsentiment',
               headers:{'content-type':'application/json'},
+              data:{
+                file:'tweet.csv',
+                type:namePath,
+              },
 
           })
           // console.log('getData==>', response.data.text[0].title)
@@ -46,7 +51,7 @@ export default function Visualiton() {
   // console.log("visualition==>",positive, negative , neutral, data)
 
   // const props = data
-  const name = "hello yassine"
+  // const name = "hello yassine"
 
   return (
     <div className={classes.container}>
