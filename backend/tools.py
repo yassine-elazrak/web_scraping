@@ -44,14 +44,38 @@ class Store:
         listFile = []
         for file in glob(absolutePath):
             df = pd.read_csv(file)
-            listFile.append(df)
+            if df.shape[0] > 1:
+                listFile.append(df)
+        if not listFile:
+            print("df====<vide")
+            return
         df = pd.concat(listFile)
-        ###
+        ##
         df = analyzeSentiment(df)
         df, n = cluster(df)
         df = topic(df ,n)
         print('=====================================>',n,'topic\n\n')
         df.to_csv(self.file, index=False)
+
+    def to_sql(self,folder):
+        absolutePath = os.path.join("./", folder) + "/*.csv"
+        listFile = []
+        for file in glob(absolutePath):
+            df = pd.read_csv(file)
+            if df.shape[0] > 1:
+                listFile.append(df)
+        if not listFile:
+            print("df====<vide")
+            return pd.DataFrame({})
+        # df = None
+        df = pd.concat(listFile)
+        print('=====================================>',"sqllll",'topic\n\n')
+        # ##
+        df = analyzeSentiment(df)
+        df, n = cluster(df)
+        df = topic(df ,n)
+        return df
+        # df.to_csv(self.file, index=False)
 
     def addDatatbase(self):
         pass
@@ -79,11 +103,12 @@ class generatorDate:
 
 class Task:
     def __init__(self, args):
+        print("config==>", args)
         self.date =generatorDate(args['startTime'].split('T')[0], args['endTime'].split('T')[0]).generator()
         self.store = Store(args['folder'], args['file'])
         self.keys = args['keys']
         self.settings = args
-        if args['size'] != '':
+        if str(args['size']).isdigit():
             self.Tweet = int(args['size'])
         else:
             self.Tweet = -1
@@ -108,9 +133,24 @@ class Task:
             self.waiting()
             print('folderuud',folder)
             self.store.concatFiles(folder)
+    def executeSql(self):
+        df = None
+        with openFolder() as folder:
+            for date in self.date:
+                self.listThread.append(Thread(target=self.myJobs,args=[date[0], date[1], folder]))
+            for Process in self.listThread:
+                Process.start()
+            self.waiting()
+            print('folderuud',folder)
+            df = self.store.to_sql(folder)
+        return df
 
 def run(data):
     Task(data).execute()
+    
+def runSql(data):
+    df = Task(data).executeSql()
+    return df
         
 # {
 #     "startTime": "2020-09-24T10:30",

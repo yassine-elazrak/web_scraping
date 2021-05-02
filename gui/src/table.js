@@ -11,6 +11,7 @@ import Paper from "@material-ui/core/Paper";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import { Button } from "@material-ui/core";
 import { v4 } from 'uuid';
+import background from './undraw_Project_completed_re_pqqq.svg'
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -64,7 +65,7 @@ export default function Tables() {
 
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} style={{ backgroundImage: `url(${background})` }}>
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="customized table">
           <TableHead>
@@ -73,7 +74,9 @@ export default function Tables() {
               {/* <StyledTableCell align="right">tweet</StyledTableCell> */}
               <StyledTableCell align="left">Username</StyledTableCell>
               <StyledTableCell align="left"> Date</StyledTableCell>
-              <StyledTableCell align="right">Lien tweet</StyledTableCell>
+              <StyledTableCell align="right">Sentiment</StyledTableCell>
+              <StyledTableCell align="left">Topic</StyledTableCell>
+
             </TableRow>
           </TableHead>
           <TableBody>
@@ -85,7 +88,10 @@ export default function Tables() {
                 {/* <StyledTableCell align="right">{row.tweet}</StyledTableCell> */}
                 <StyledTableCell align="left">{row.username}</StyledTableCell>
                 <StyledTableCell align="left">{row.date}</StyledTableCell>
-                <StyledTableCell align="right">
+                <StyledTableCell align="left">{row.sentiment}</StyledTableCell>
+                <StyledTableCell align="left">{`#Topic${row.topic}`}</StyledTableCell>
+
+                {/* <StyledTableCell align="right">
                   <a href={row.url}>
                     <Button
                       variant="contained"
@@ -95,7 +101,7 @@ export default function Tables() {
                       className={classes.button}
                     ></Button>
                   </a>
-                </StyledTableCell>
+                </StyledTableCell> */}
               </StyledTableRow>
             ))}
           </TableBody>

@@ -6,7 +6,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import DeleteIcon from '@material-ui/icons/Delete'
 import SearchIcon from '@material-ui/icons/Search';
 // import {v4} from 'uuid';
-import background from './imgtweet.png';
+import background from './undraw_Location_search_re_ttoj.svg';
 
 const Search2 = () => {
   const classes = useStyles();

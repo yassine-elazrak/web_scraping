@@ -3,6 +3,8 @@ import {makeStyles} from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Switch from '@material-ui/core/Switch';
+import TextField from '@material-ui/core/TextField';
+
 
 
 export const Lang = ({formData , setFormData}) => {
@@ -34,9 +36,8 @@ export const Lang = ({formData , setFormData}) => {
     return (
         <div className={classes.root}>
             <div className={classes.items}>
-                <p>choise lang</p>
-            </div>
-             <div className={classes.items}>
+                <p>Choose your language</p>
+           
                 <Select 
                 open={open}
                 value={language}
@@ -46,21 +47,20 @@ export const Lang = ({formData , setFormData}) => {
                 onChange={handleChange}
 
                 >
-                    <MenuItem value={'franch'}>
-                    <em>france</em>
+                    <MenuItem value={'fr'}>
+                    <em>fr</em>
                     </MenuItem >
-                    <MenuItem value={'arabic'}>
-                    <em>arabic</em>
+                    <MenuItem value={'ar'}>
+                    <em>ar</em>
                     </MenuItem>
-                    <MenuItem value={'english'}>
-                        <em>english</em>
+                    <MenuItem value={'en'}>
+                        <em>en</em>
                     </MenuItem>
                 </Select>  
             </div>
             <div className={classes.items}>
-                <p>choise eta emoji</p>
-            </div>
-             <div className={classes.items}>
+                <p>Choose your status for the emoji</p>
+            
                 <Select 
                 open={open2}
                 value={emoji}
@@ -71,13 +71,13 @@ export const Lang = ({formData , setFormData}) => {
 
                 >
                     <MenuItem value={'stay'}>
-                    <em>stay emoji</em>
+                    <em>Keep the emoji in Tweets</em>
                     </MenuItem >
                     <MenuItem value={'replace'}>
-                    <em>replace emoji</em>
+                    <em>Replace emojis in Tweets</em>
                     </MenuItem>
                     <MenuItem value={'remove'}>
-                        <em>remove emoji</em>
+                        <em>Remove emojis in Tweets</em>
                     </MenuItem>
                 </Select>  
             </div>   
@@ -96,6 +96,9 @@ const useStyles = makeStyles({
     },
     items:{
         margin:'23px',
+        display:'flex',
+        flexDirection:'column',
+        flexWrap:'wrap',
 
     },
 });
@@ -105,7 +108,7 @@ export const Limet = ({formData, setFormData}) => {
     const classes = useStyles();
     // const [size, setSize] = useState('');
     // const [file, setFile] = useState('');
-    const [flag, setFlag] = useState(true);
+    const [flag, setFlag] = useState(false);
 
     // const handleChangeFile = (event)=>{
     //     setFile(event.target.value)
@@ -122,9 +125,25 @@ export const Limet = ({formData, setFormData}) => {
 
     return (
         <div className={classes.limet}>
-            <input placeholder='enter name file'value={file} name='file' onChange={handleChange}></input>    
-            <Switch checked={flag} onChange={()=>{setFlag(!flag)}}/>
-            {flag && <input name='size' placeholder='enter size tweet' value={size} onChange={handleChange}/>}
+            <TextField
+            autoFocus
+            margin="dense"
+            // id="name"
+            label="Name File"
+            type="email"
+             placeholder='enter name file'value={file} name='file' onChange={handleChange}/>
+             <br></br>    
+            <div>  <p>Determine the number of tweets </p> <Switch label="Determine the number of tweets" name="tweets"  checked={flag} onChange={()=>{setFlag(!flag)}}/> </div>
+            {flag && <div>  <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Number Tweets"
+            type="email"
+            // fullWidth
+           name='size' placeholder='enter size tweet' type="text" maxlength="9" 
+  required placeholder="Enter Digits only" pattern = "[0-9]" value={size} onChange={handleChange}/> 
+  </div>}
         </div>
     )
 }

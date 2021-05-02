@@ -13,7 +13,8 @@ from collections import Counter
 from math import sqrt
 from kneed import KneeLocator
 
-# df = pd.read_csv('./tweet.csv')
+
+
 
 def sentiment(text):
     result = TextBlob(text)

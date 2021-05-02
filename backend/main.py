@@ -2,8 +2,18 @@ from flask import Flask, request, abort
 from flask_cors import CORS #comment this on deployment
 from tools import run
 import route
+# from  route import DB
+import schedule
+from apscheduler.schedulers.background import BackgroundScheduler
+
+
 
 ##https://stackoverflow.com/questions/11994325/how-to-divide-flask-app-into-multiple-py-files
+
+def sensor():
+    """ Function for test purposes. """
+    print("\n\n\nScheduler is alive!\n\n\n")
+
 
 app = Flask(__name__)
 CORS(app)
@@ -23,7 +33,14 @@ app.add_url_rule('/monthsentiment', methods=['GET'], view_func=route.monthsentim
 app.add_url_rule('/texttopic', methods=['GET'], view_func=route.texttopic)
 app.add_url_rule('/monthsentiment', methods=['GET'],view_func=route.monthsentiment)
 app.add_url_rule('/nbtweets',methods=['GET'], view_func=route.nbtweets)
+app.add_url_rule('/meun', methods=['POST'], view_func=route.meun)
+
 
 
 if __name__ == '__main__':
+    # DB.test()
+    # DB.addFile('rrr.csv')
+    # sched = BackgroundScheduler(daemon=True)
+    # sched.add_job(sensor,'interval',minutes=1)
+    # sched.start()
     app.run(debug=True)

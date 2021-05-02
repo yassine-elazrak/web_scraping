@@ -13,25 +13,25 @@ function Header() {
           <HashRouter>
           <nav>
             <ul className={classes.list}>
-            <li className={classes.li}>
-                <Link to='/main'>test</Link>
+            {/* <li className={classes.li}>
+                <Link style={{ fontSize: '1.5em' , textDecoration: 'none'}} to='/main'>test</Link>
+              </li> */}
+              <li className={classes.li}>
+                <Link style={{fontSize: '1.5em' ,  textDecoration: 'none'}}  to='/table'>Tweet</Link>
               </li>
               <li className={classes.li}>
-                <Link to='/table'>Tweet</Link>
+                  <Link  style={{ fontSize: '1.5em' , textDecoration: 'none'}} to='/configuration'>Configuration</Link>
               </li>
               <li className={classes.li}>
-                  <Link to='/configuration'>Configuration</Link>
+              <Link style={{ fontSize: '1.5em' , textDecoration: 'none'}}  to="/visualition">visualition</Link>
               </li>
               <li className={classes.li}>
-              <Link to="/visualition">visualition</Link>
-              </li>
-              <li className={classes.li}>
-                <Link to="/">home</Link>
+                <Link style={{fontSize: '1.5em' ,  textDecoration: 'none'}} to="/">home</Link>
               </li>
             </ul>
           </nav>
           </HashRouter>
-          <div className={classes.logo}>hello</div>
+          {/* <div className={classes.logo}>hello</div> */}
       </div>
       )
 }
@@ -44,7 +44,7 @@ const useStyles = makeStyles({
     display: 'flex',
     justifyContent:'flex-end',
     flexGrow: 1,
-    minHeight:'20px',
+    minHeight:'10px',
     // marginBottom:'git 30px',
 
   },
@@ -56,7 +56,7 @@ const useStyles = makeStyles({
 
   },
   li:{
-    padding: '2px 22px',
+    padding: '0px 22px',
     textDecoration:'none',
   }
   ,

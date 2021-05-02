@@ -15,6 +15,8 @@ import ReplayIcon from '@material-ui/icons/Replay';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 import axios from 'axios';
+import background from './undraw_settings_tab_mgiw.svg';
+
 
 const defaultSettings = {
     digit:false,
@@ -27,10 +29,11 @@ const defaultSettings = {
     stemming: false,
     Name: false,    
 }
+
 const dataDefault = {
-    startTime:'2020-05-24T10:30',
-    endTime:'2019-05-24T10:30',
-    language:'english',
+    startTime:'2019-05-24T10:30',
+    endTime:'2020-05-24T10:30',
+    language:'en',
     emoji:'replace',
     size: '',
     file : '',
@@ -39,7 +42,7 @@ const dataDefault = {
 }
 
 const getStep = ()=>{
-    return ['settings date', 'settings clean data' , 'limet tweets','settings language and emoji'];
+    return ['Set date and time', 'Data pre-processing settings' , 'Tweet count settings','Language settings and emojis'];
 };
 
 const Step1 = () => {
@@ -55,13 +58,13 @@ const Step1 = () => {
         setActiveId( prevActiveId => prevActiveId - 1);
     };
     const handleReset = () => {
-        console.log('Reset',formData, "Reset222close");
+        // console.log('Reset',formData, "Reset222close");
         setActiveId(0);
     };
-    const handleSave = ()=>{
-        alert(formData);
-        console.log(formData);
-    }
+    // const handleSave = ()=>{
+    //     alert(formData);
+    //     console.log(formData);
+    // }
     const props = {formData, setFormData};
     // console.log("formDatat==>",formData)
     const getContent = (id)=>{
@@ -78,7 +81,7 @@ const Step1 = () => {
                 return 'unknow id';
         }
     }
-    useEffect(()=>{
+    const saveData = ()=>{
 
         axios({
             method:'post',
@@ -88,12 +91,12 @@ const Step1 = () => {
             },
             data :formData
         })
-        console.log('effect data', formData)
+        // console.log('effect data', formData)
 
-    },[formData])
+    };
     return (
-        <div className={classes.root}>
-            <Stepper  activeStep={activeId} orientation='vertical'>
+        <div className={classes.root} style={{ backgroundImage: `url(${background})` }}>
+           <div> <Stepper  activeStep={activeId} orientation='vertical'>
                 {
                     steps.map((label, index) => {
                       
@@ -160,7 +163,7 @@ const Step1 = () => {
                                         color="primary"
                                         size="small"
                                         startIcon={<SaveIcon />}
-                                        onClick={handleSave}
+                                        onClick={saveData}
                                         className={classes.button}>
                                            Save
                                        </Button>
@@ -172,12 +175,19 @@ const Step1 = () => {
 
 
         </div>
+        <div></div>
+        </div>
+        
 
     )
 }
 const useStyles = makeStyles({
     root:{
         width: '100%',
+        display:'grid',
+        gridTemplateColumns: "repeat(2,1fr)",
+
+
     },
 
     actionContainer:{

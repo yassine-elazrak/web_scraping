@@ -21,14 +21,14 @@ export default function DateAndTime({formData, setFormData}) {
   const handleChange = (event)=>{
       setFormData({...formData,[event.target.name]:event.target.value})
         // console.log("-----",event.target.name, event.target.value)
-      console.log("date22==>", formData , "____");
+      // console.log("date22==>", formData , "____");
   }
   return (
       
     <form className={classes.container} noValidate>
       <TextField
         id="datetime-local"
-        label="Next appointment"
+        label="The date the search began"
         type="datetime-local"
         name='startTime'
         value={startTime}
@@ -40,7 +40,7 @@ export default function DateAndTime({formData, setFormData}) {
       />
       <TextField
         id="datetime-local2"
-        label="Next appointment"
+        label="Search end date"
         type="datetime-local"
         name='endTime'
         value={endTime}

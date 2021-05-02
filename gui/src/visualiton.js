@@ -16,6 +16,8 @@ import {TopicSentiment,Topicstext} from './topics';
 import axios from "axios";
 import { DialogTitle } from "@material-ui/core";
 import Words from './data'
+import Meun from './meun';
+import background from './undraw_visual_data_b1wx.svg'
 
 
 // import Tables from './table';
@@ -54,7 +56,8 @@ export default function Visualiton({namePath}) {
   // const name = "hello yassine"
 
   return (
-    <div className={classes.container}>
+    <div className={classes.container} style={{ backgroundImage: `url(${background})` }}>
+      <Meun/>
       <div className={classes.statics}>
         <Statics/>
       </div>
