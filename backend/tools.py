@@ -19,9 +19,10 @@ class Search:
         self.configue.Store_csv = True                                                 # type file storage csv
         self.configue.Hide_output = True                                               # hiding or ignore output stdout
         self.configue.Output = outFile                                                 # name file the stroge 
-        # if limitTweet > 0:                                                            # if limitTweet < 0 mean maxum tweet else number tweet == limitTweet
-        #     self.configue.Limit = limitTweet 
-        self.configue.Limit = 200                                          
+        if limitTweet > 0:                                                            # if limitTweet < 0 mean maxum tweet else number tweet == limitTweet
+            self.configue.Limit = limitTweet 
+        # self.configue.Limit = 200 
+        print("limit===>tweets",limitTweet)                                         
     def search(self) -> None:                                                                  
         twint.run.Search(self.configue)   
 
@@ -48,33 +49,48 @@ class Store:
                 listFile.append(df)
         if not listFile:
             print("df====<vide")
+            df = pd.DataFrame({})
+            df.to_csv(self.file, index=False)
             return
         df = pd.concat(listFile)
+        df.to_csv(self.file, index=False)
+        return
         ##
+        print('=====================================>','sum data\n\n')
+        # try:
         df = analyzeSentiment(df)
+        print('=====================================>','sentiment\n\n')
+
         df, n = cluster(df)
+            # n = 5
+        print('=====================================>','clustring\n\n')
+
         df = topic(df ,n)
         print('=====================================>',n,'topic\n\n')
         df.to_csv(self.file, index=False)
+        # except: 
+        #     print("errroro  machine ===>")
+        #     pass
 
-    def to_sql(self,folder):
-        absolutePath = os.path.join("./", folder) + "/*.csv"
-        listFile = []
-        for file in glob(absolutePath):
-            df = pd.read_csv(file)
-            if df.shape[0] > 1:
-                listFile.append(df)
-        if not listFile:
-            print("df====<vide")
-            return pd.DataFrame({})
-        # df = None
-        df = pd.concat(listFile)
-        print('=====================================>',"sqllll",'topic\n\n')
-        # ##
-        df = analyzeSentiment(df)
-        df, n = cluster(df)
-        df = topic(df ,n)
-        return df
+    # def to_sql(self,folder):
+    #     absolutePath = os.path.join("./", folder) + "/*.csv"
+    #     listFile = []
+    #     for file in glob(absolutePath):
+    #         df = pd.read_csv(file)
+    #         if df.shape[0] > 1:
+    #             listFile.append(df)
+    #     if not listFile:
+    #         print("df====<vide")
+    #         return pd.DataFrame({})
+    #     # df = None
+    #     df = pd.concat(listFile)
+    #     print('=====================================>',"sqllll",'topic\n\n')
+    #     # ##
+    #     # df = analyzeSentiment(df)
+    #     df, n = cluster(df)
+
+    #     df = topic(df ,4)
+        # return df
         # df.to_csv(self.file, index=False)
 
     def addDatatbase(self):
@@ -133,24 +149,25 @@ class Task:
             self.waiting()
             print('folderuud',folder)
             self.store.concatFiles(folder)
-    def executeSql(self):
-        df = None
-        with openFolder() as folder:
-            for date in self.date:
-                self.listThread.append(Thread(target=self.myJobs,args=[date[0], date[1], folder]))
-            for Process in self.listThread:
-                Process.start()
-            self.waiting()
-            print('folderuud',folder)
-            df = self.store.to_sql(folder)
-        return df
+    # def executeSql(self):
+    #     df = None
+    #     with openFolder() as folder:
+    #         for date in self.date:
+    #             self.listThread.append(Thread(target=self.myJobs,args=[date[0], date[1], folder]))
+    #         for Process in self.listThread:
+    #             Process.start()
+    #         self.waiting()
+    #         print('folderuud',folder)
+    #         df = self.store.to_sql(folder)
+    #     return df
 
 def run(data):
     Task(data).execute()
     
 def runSql(data):
-    df = Task(data).executeSql()
-    return df
+    pass
+#     df = Task(data).executeSql()
+#     return df
         
 # {
 #     "startTime": "2020-09-24T10:30",
